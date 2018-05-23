@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace TerraTeam1
 {
-    class Program
+    class TestPUSH
     {
-        static void Main(string[] args)
-        {
-        }
+        int ja = 2;
     }
 }
