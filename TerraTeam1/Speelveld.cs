@@ -33,38 +33,47 @@ namespace TerraTeam1
             Terrarium = new IOrganismen[GrootteX, GrootteY];
         }
 
-        public void AddPlantenToSpeelveld(List<Plant> laPlanten)
+        public int AddPlantenToSpeelveld(List<Plant> Planten)
         {
             Random rnd = new Random();
+            int amPlantenAdded = 0;
 
-            foreach (var p in laPlanten)
+            foreach (var p in Planten)
             {
-                while (true)
+                if (amPlantenAdded < (this.GrootteX * this.GrootteY))
                 {
-                    int rndValueXinp = rnd.Next(0, this.GrootteX );
-                    int rndValueYinp = rnd.Next(0, this.GrootteY );
-
-                    if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                    while (true)
                     {
-                        this.Terrarium[rndValueXinp, rndValueYinp] = p;
-                        break;
+                        int rndValueXinp = rnd.Next(0, this.GrootteX);
+                        int rndValueYinp = rnd.Next(0, this.GrootteY);
+
+                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                        {
+                            this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                            break;
+                        }
                     }
                 }
+                else
+                {
+                    break;  // stop foreach loop
+                }
+                amPlantenAdded++;
             }
-
+            return amPlantenAdded;
         }
 
         public int CountAmounOfPlantsInSpeelveld()
         {
             int amount = 0;
 
-            for (int x = 0;x< this.GrootteX;x++)
+            for (int x = 0; x < this.GrootteX; x++)
             {
-                for (int y = 0;y < this.GrootteY;y++)
+                for (int y = 0; y < this.GrootteY; y++)
                 {
-                    if (this.Terrarium[x,y] != null)
+                    if (this.Terrarium[x, y] != null)
                     {
-                        if (this.Terrarium[x, y].GetType()==typeof(Plant))
+                        if (this.Terrarium[x, y].GetType() == typeof(Plant))
                             amount++;
                     }
                 }
@@ -95,8 +104,8 @@ namespace TerraTeam1
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine();
-                Console.WriteLine();    
-                               
+                Console.WriteLine();
+
             }
         }
 

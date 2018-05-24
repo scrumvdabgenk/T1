@@ -32,7 +32,15 @@ namespace UnitTestTerraTeam1
 
         }
 
+        [TestMethod]
+        public void TestSpeelveldPlaceTooManyPlantsOnSpeelveld()
+        {
+            Speelveld speelveld = new Speelveld(2, 2);
 
-
+            List<Plant> planten = Plant.CreatePlanten(5);
+            int amAdded = speelveld.AddPlantenToSpeelveld(planten);
+            Assert.AreEqual(speelveld.CountAmounOfPlantsInSpeelveld(), 4);
+            Assert.AreEqual(amAdded, 4);
+        }
     }
 }
