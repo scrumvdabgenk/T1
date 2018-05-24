@@ -9,6 +9,10 @@ namespace TerraTeam1
     public abstract class Dier : IOrganismen
     {
         private string naamValue;
+        private int posxValue;
+        private int posyValue;
+        private int levenskrachtValue;
+        private int totaantStappenValue;
 
         // constructor
         public Dier()
@@ -90,8 +94,6 @@ namespace TerraTeam1
             
         }
 
-        private int totaantStappenValue;
-
         public int TotAantStappen
         {
             get { return totaantStappenValue; }
@@ -102,12 +104,12 @@ namespace TerraTeam1
         {
             get
             {
-                throw new NotImplementedException();
+                return this.levenskrachtValue;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.levenskrachtValue = value;
             }
         }
 
@@ -115,12 +117,12 @@ namespace TerraTeam1
         {
             get
             {
-                throw new NotImplementedException();
+                return this.posxValue;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.posxValue = value;
             }
         }
 
@@ -128,12 +130,12 @@ namespace TerraTeam1
         {
             get
             {
-                throw new NotImplementedException();
+                return this.posyValue;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.posyValue = value;
             }
         }
 
@@ -149,6 +151,7 @@ namespace TerraTeam1
                 this.naamValue = value;
             }
         }
+
 
         public void Delete()
         {
