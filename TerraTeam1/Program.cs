@@ -10,7 +10,10 @@ namespace TerraTeam1
     {
         static void Main(string[] args)
         {
+            while (Console.ReadLine().ToUpper() != "S")
+            {
 
+            }
         }
     }
 }

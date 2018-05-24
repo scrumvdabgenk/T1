@@ -10,6 +10,8 @@ namespace UnitTestTerraTeam1
         public void TestMethod1()
         {
             /**/
+            int x = 0;
+            int y = 0;
         }
     }
 }
