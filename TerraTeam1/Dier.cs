@@ -6,34 +6,31 @@ using System.Threading.Tasks;
 
 namespace TerraTeam1
 {
-    abstract class Dier
+    abstract class Dier : IOrganismen
     {
+        // constructor
         public Dier()
         {
+            this.Name = "";
 
         }
-        private int nameValue;
+        private string nameValue;
 
-        public int Name
+        public string Name
         {
             get { return nameValue; }
             set { nameValue = value; }
         }
 
-        private int bewegingValue;
-
-        public int Beweging
+        public void Beweeg(int Xpos, int Ypos)
         {
-            get { return bewegingValue; }
-            set { bewegingValue = value; }
+            this.PosX = Xpos;
+            this.PosY = Ypos;
         }
 
-        private int etenValue;
-
-        public int Eten
+        public int Eet()
         {
-            get { return etenValue; }
-            set { etenValue = value; }
+            return 0;
         }
 
         private int totaantStappenValue;
@@ -44,9 +41,48 @@ namespace TerraTeam1
             set { totaantStappenValue = value; }
         }
 
+        public int Levenskracht
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
+        public int PosX
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
+        public int PosY
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
