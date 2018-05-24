@@ -15,5 +15,16 @@ namespace TerraTeam1
 
             }
         }
+
+        public List<Plant> CreatePlanten(int aantal)
+        {
+            List<Plant> laPlant = new List<Plant> { };
+            while (aantal > 0)
+            {
+                laPlant.Add(new Plant());
+                aantal--;
+            }
+            return laPlant;
+        }
     }
 }

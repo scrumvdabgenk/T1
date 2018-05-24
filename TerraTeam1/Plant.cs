@@ -8,16 +8,44 @@ namespace TerraTeam1
 {
     public class Plant : IOrganismen
     {
+        private int posXValue;
+        private int posYValue;
+        private string naamValue;
+        private int levenskrachtValue;
+
+        public Plant()
+        {
+            this.PosX = 0;
+            this.PosY = 0;
+        }
+
+        public Plant(int enPosX, int enPosY)
+        {
+            this.PosX = enPosX;
+            this.PosY = enPosY;
+        }
+
+        public static List<Plant> CreatePlanten(int aantal)
+        {
+            List<Plant> laPlant = new List<Plant> { };
+            while (aantal > 0)
+            {
+                laPlant.Add(new Plant());
+                aantal--;
+            }
+            return laPlant;
+        }
+
         public int Levenskracht
         {
             get
             {
-                throw new NotImplementedException();
+                return this.levenskrachtValue;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.levenskrachtValue = value;
             }
         }
 
@@ -25,12 +53,12 @@ namespace TerraTeam1
         {
             get
             {
-                throw new NotImplementedException();
+                return this.naamValue;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.naamValue = value;
             }
         }
 
@@ -38,12 +66,12 @@ namespace TerraTeam1
         {
             get
             {
-                throw new NotImplementedException();
+                return this.posXValue;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.posXValue = value;
             }
         }
 
@@ -51,12 +79,12 @@ namespace TerraTeam1
         {
             get
             {
-                throw new NotImplementedException();
+                return this.posYValue;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.posYValue = value;
             }
         }
 
