@@ -10,19 +10,19 @@ namespace TerraTeam1
     {
         static void Main(string[] args)
         {
-            Random rnd = new Random();
-
-            Speelveld speelveld = new Speelveld(6, 6);
-
-            int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
-            int rndValuePlant = rnd.Next(1,rndspeelveld);
-
-            List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
-            speelveld.AddPlantenToSpeelveld(planten);
             string ingave = "";
-
-            while (ingave!= "s")
+            while (ingave != "s")
             {
+                Random rnd = new Random();
+
+                Speelveld speelveld = new Speelveld(6, 6);
+
+                int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
+                int rndValuePlant = rnd.Next(1, rndspeelveld);
+
+                List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
+                speelveld.AddPlantenToSpeelveld(planten);
+
                 speelveld.ToonSpeelveld();
                 ingave = Console.ReadLine();
 
@@ -30,6 +30,6 @@ namespace TerraTeam1
             Console.WriteLine("druk toets");
             Console.ReadLine();
 
-        }      
+        }
     }
 }
