@@ -8,6 +8,8 @@ namespace TerraTeam1
 {
     public abstract class Dier : IOrganismen
     {
+        private string naamValue;
+
         // constructor
         public Dier()
         {
@@ -139,12 +141,12 @@ namespace TerraTeam1
         {
             get
             {
-                throw new NotImplementedException();
+                return this.naamValue;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.naamValue = value;
             }
         }
 
@@ -153,5 +155,9 @@ namespace TerraTeam1
             throw new NotImplementedException();
         }
 
+        public override string ToString()
+        {
+            return this.Naam;
+        }
     }
 }

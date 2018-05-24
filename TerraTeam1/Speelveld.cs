@@ -36,11 +36,11 @@ namespace TerraTeam1
         public int AddPlantenToSpeelveld(List<Plant> Planten)
         {
             Random rnd = new Random();
-            int amPlantenAdded = 0;
+            int amFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
 
             foreach (var p in Planten)
             {
-                if (amPlantenAdded < (this.GrootteX * this.GrootteY))
+                if (amFreeFields < (this.GrootteX * this.GrootteY))
                 {
                     while (true)
                     {
@@ -58,9 +58,71 @@ namespace TerraTeam1
                 {
                     break;  // stop foreach loop
                 }
-                amPlantenAdded++;
+                amFreeFields++;
             }
-            return amPlantenAdded;
+            return amFreeFields;
+        }
+
+        public int AddCarnivorenToSpeelveld(List<Carnivoor> Carnivoren)
+        {
+            Random rnd = new Random();
+            int amFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+
+            foreach (var p in Carnivoren)
+            {
+                if (amFreeFields < (this.GrootteX * this.GrootteY))
+                {
+                    while (true)
+                    {
+                        int rndValueXinp = rnd.Next(0, this.GrootteX);
+                        int rndValueYinp = rnd.Next(0, this.GrootteY);
+
+                        // test if the animal can be put on an empty place
+                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                        {
+                            this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    break;  // stop foreach loop
+                }
+                amFreeFields++;
+            }
+            return amFreeFields;
+        }
+
+        public int AddHerbivorenToSpeelveld(List<Herbivoor> Herbivoren)
+        {
+            Random rnd = new Random();
+            int amFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+
+            foreach (var p in Herbivoren)
+            {
+                if (amFreeFields < (this.GrootteX * this.GrootteY))
+                {
+                    while (true)
+                    {
+                        int rndValueXinp = rnd.Next(0, this.GrootteX);
+                        int rndValueYinp = rnd.Next(0, this.GrootteY);
+
+                        // test if the animal can be put on an empty place
+                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                        {
+                            this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    break;  // stop foreach loop
+                }
+                amFreeFields++;
+            }
+            return amFreeFields;
         }
 
         public int CountAmounOfPlantsInSpeelveld()
@@ -74,6 +136,60 @@ namespace TerraTeam1
                     if (this.Terrarium[x, y] != null)
                     {
                         if (this.Terrarium[x, y].GetType() == typeof(Plant))
+                            amount++;
+                    }
+                }
+            }
+            return amount;
+        }
+
+        public int CountAmounOfHerbivorenInSpeelveld()
+        {
+            int amount = 0;
+
+            for (int x = 0; x < this.GrootteX; x++)
+            {
+                for (int y = 0; y < this.GrootteY; y++)
+                {
+                    if (this.Terrarium[x, y] != null)
+                    {
+                        if (this.Terrarium[x, y].GetType() == typeof(Herbivoor))
+                            amount++;
+                    }
+                }
+            }
+            return amount;
+        }
+
+        public int CountAmounOfCarnivorenInSpeelveld()
+        {
+            int amount = 0;
+
+            for (int x = 0; x < this.GrootteX; x++)
+            {
+                for (int y = 0; y < this.GrootteY; y++)
+                {
+                    if (this.Terrarium[x, y] != null)
+                    {
+                        if (this.Terrarium[x, y].GetType() == typeof(Herbivoor))
+                            amount++;
+                    }
+                }
+            }
+            return amount;
+        }
+
+        public int CountAmounOfEmptyFieldsInSpeelveld()
+        {
+            int amount = 0;
+
+            for (int x = 0; x < this.GrootteX; x++)
+            {
+                for (int y = 0; y < this.GrootteY; y++)
+                {
+                    if (this.Terrarium[x, y] != null)
+                    {
+                        if (this.Terrarium[x, y] == null)
                             amount++;
                     }
                 }
