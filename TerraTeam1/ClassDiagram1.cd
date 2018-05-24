@@ -14,11 +14,11 @@
       <FileName>TestPUSH.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="TerraTeam1.Organismen">
+  <Interface Name="TerraTeam1.IOrganismen">
     <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAwAAAAAEAAAABAAAAAAAAAAA=</HashCode>
-      <FileName>Organismen.cs</FileName>
+      <FileName>IOrganismen.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
