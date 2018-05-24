@@ -41,8 +41,8 @@ namespace TerraTeam1
             {
                 while (true)
                 {
-                    int rndValueXinp = rnd.Next(0, this.GrootteX - 1);
-                    int rndValueYinp = rnd.Next(0, this.GrootteY - 1);
+                    int rndValueXinp = rnd.Next(0, this.GrootteX );
+                    int rndValueYinp = rnd.Next(0, this.GrootteY );
 
                     if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
                     {
