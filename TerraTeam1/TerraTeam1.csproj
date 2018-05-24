@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Carnivoor.cs" />
     <Compile Include="Dier.cs" />
+    <Compile Include="Herbivoor.cs" />
     <Compile Include="IOrganismen.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

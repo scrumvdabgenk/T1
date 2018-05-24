@@ -6,20 +6,13 @@ using System.Threading.Tasks;
 
 namespace TerraTeam1
 {
-    abstract class Dier : IOrganismen
+    public abstract class Dier : IOrganismen
     {
         // constructor
         public Dier()
         {
-            this.Name = "";
+            this.Naam = "";
 
-        }
-        private string nameValue;
-
-        public string Name
-        {
-            get { return nameValue; }
-            set { nameValue = value; }
         }
 
         public void Beweeg(int Xpos, int Ypos)
@@ -68,6 +61,19 @@ namespace TerraTeam1
         }
 
         public int PosY
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Naam
         {
             get
             {
