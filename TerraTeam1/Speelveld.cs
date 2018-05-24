@@ -33,5 +33,44 @@ namespace TerraTeam1
             Terrarium = new IOrganismen[GrootteX, GrootteY];
         }
 
+        public void AddPlantenToSpeelveld(List<Plant> laPlanten)
+        {
+            Random rnd = new Random();
+
+            foreach (var p in laPlanten)
+            {
+                while (true)
+                {
+                    int rndValueXinp = rnd.Next(0, this.GrootteX - 1);
+                    int rndValueYinp = rnd.Next(0, this.GrootteY - 1);
+
+                    if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                    {
+                        this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        public int CountAmounOfPlantsInSpeelveld()
+        {
+            int amount = 0;
+
+            for (int x = 0;x< this.GrootteX;x++)
+            {
+                for (int y = 0;y < this.GrootteY;y++)
+                {
+                    if (this.Terrarium[x,y] != null)
+                    {
+                        if (this.Terrarium[x, y].GetType()==typeof(Plant))
+                            amount++;
+                    }
+                }
+            }
+            return amount;
+        }
+
     }
 }

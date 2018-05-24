@@ -10,21 +10,22 @@ namespace TerraTeam1
     {
         static void Main(string[] args)
         {
+            Random rnd = new Random();
+
+            Speelveld speelveld = new Speelveld(6, 6);
+
+            int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
+            int rndValuePlant = rnd.Next(1,rndspeelveld);
+
+            List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
+            speelveld.AddPlantenToSpeelveld(planten);
+
             while (Console.ReadLine().ToUpper() != "S")
             {
 
             }
-        }
 
-        public List<Plant> CreatePlanten(int aantal)
-        {
-            List<Plant> laPlant = new List<Plant> { };
-            while (aantal > 0)
-            {
-                laPlant.Add(new Plant());
-                aantal--;
-            }
-            return laPlant;
-        }
+
+        }      
     }
 }
