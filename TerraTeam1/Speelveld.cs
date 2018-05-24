@@ -72,5 +72,33 @@ namespace TerraTeam1
             return amount;
         }
 
+        public void ToonSpeelveld()
+        {
+            for (int x = 0; x <= GrootteX - 1; x++)
+            {
+                for (int y = 0; y <= GrootteY - 1; y++)
+                {
+                    if (this.Terrarium[x, y] != null)
+                    {
+
+                        Console.Write(this.Terrarium[x, y].ToString());
+
+                    }
+
+                    else
+                    {
+                        Console.Write('.');
+                    }
+                    Console.Write("     ");
+
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();    
+                               
+            }
+        }
+
     }
 }

@@ -8,6 +8,5 @@ namespace TerraTeam1
 {
     class TestPUSH
     {
-        int ja = 2;
     }
 }

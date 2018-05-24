@@ -19,12 +19,16 @@ namespace TerraTeam1
 
             List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
             speelveld.AddPlantenToSpeelveld(planten);
+            string ingave = "";
 
-            while (Console.ReadLine().ToUpper() != "S")
+            while (ingave!= "s")
             {
+                speelveld.ToonSpeelveld();
+                ingave = Console.ReadLine();
 
             }
-
+            Console.WriteLine("druk toets");
+            Console.ReadLine();
 
         }      
     }

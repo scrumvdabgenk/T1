@@ -17,12 +17,14 @@ namespace TerraTeam1
         {
             this.PosX = 0;
             this.PosY = 0;
+            this.Naam = "P";
         }
 
         public Plant(int enPosX, int enPosY)
         {
             this.PosX = enPosX;
             this.PosY = enPosY;
+            this.Naam = "P";
         }
 
         public static List<Plant> CreatePlanten(int aantal)
@@ -91,6 +93,11 @@ namespace TerraTeam1
         public void Delete()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return this.Naam;
         }
     }
 }
