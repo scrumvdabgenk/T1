@@ -13,6 +13,7 @@ namespace TerraTeam1
         int PosY { get; set; }
         string Naam { get; set; }
 
+
         void Delete();
 
     }
