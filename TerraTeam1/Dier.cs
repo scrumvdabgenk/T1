@@ -15,15 +15,77 @@ namespace TerraTeam1
 
         }
 
-        public void Beweeg(int Xpos, int Ypos)
+        public void Stap(int Xpos, int Ypos)
         {
-            this.PosX = Xpos;
-            this.PosY = Ypos;
+            this.PosX += Xpos;
+            this.PosY += Ypos;
+
+        }
+        /// <summary>
+        /// Mag enkel bewegen indien de bestemming "." is.
+        /// </summary>
+        /// <param name="Beweeg"></param>
+        public void Beweeg(Speelveld eoSpeelveld)
+        {
+            for (int teller = 1; teller <= 100; teller++)
+            {
+                Random rnd = new Random();
+                int stap = rnd.Next(1, 4);
+                int x = 0;
+                int y = 0;
+
+                if (eoSpeelveld.Terrarium[PosX + 1, PosY] == null)
+                {
+                    switch (stap)
+                    {
+                        case 1:
+                            x = 1;
+                            y = 0;
+                            if (PosX + 1 > eoSpeelveld.GrootteX)
+                            {
+                                x = 0;
+                            }
+                            break;
+                        case 2:
+                            x = 0;
+                            y = 1;
+                            if (PosY + 1 > eoSpeelveld.GrootteY)
+                            {
+                                y = 0;
+                            }
+                            break;
+                        case 3:
+                            x = -1;
+                            y = 0;
+                            if (PosX - 1 < 0)
+                            {
+                                x = 0;
+                            }
+                            break;
+                        case 4:
+                            x = 0;
+                            y = -1;
+                            if (PosY - 1 < 0)
+                            {
+                                y = 0;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null)
+                    {
+                        Stap(x, y);
+                        break; //ga uit de loop
+                    }
+                }
+            }
+
         }
 
-        public int Eet()
+        public virtual void Eet(Speelveld eoSpeelveld)
         {
-            return 0;
+            
         }
 
         private int totaantStappenValue;
@@ -90,5 +152,6 @@ namespace TerraTeam1
         {
             throw new NotImplementedException();
         }
+
     }
 }

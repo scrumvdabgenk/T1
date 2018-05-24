@@ -9,7 +9,7 @@ namespace TerraTeam1
     public class Speelveld
     {
         //Creatie van een dynamic array voor speelveld
-        IOrganismen[,] Terrarium = null;
+        public IOrganismen[,] Terrarium = null;
 
         //Aanmaken van de grootte values voor X en Y
         private int grootteXval;
@@ -79,6 +79,11 @@ namespace TerraTeam1
                 }
             }
             return amount;
+        }
+
+        public IOrganismen[,] returnMatrix()
+        {
+            return this.Terrarium;
         }
 
         public void ToonSpeelveld()

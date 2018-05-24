@@ -17,5 +17,11 @@ namespace TerraTeam1
         {
 
         }
+        public override void Eet(Speelveld eoSpeelveld)
+        {
+            if (eoSpeelveld.Terrarium[PosX + 1, PosY] != null)
+            {
+            }
+        }
     }
 }

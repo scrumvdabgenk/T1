@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TerraTeam1
 {
-     interface IOrganismen
+     public interface IOrganismen
     {
         int Levenskracht { get; set; }
         int PosX { get; set; }
