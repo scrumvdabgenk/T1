@@ -203,13 +203,7 @@ namespace TerraTeam1
 
         public void ToonSpeelveld()
         {
-            int choice = 0;
-
             Thread.Sleep(150);
-            if (choice == 0)
-                Console.Clear();
-
-            string screencontent = "";
 
             for (int x = 0; x <= GrootteX - 1; x++)
             {
@@ -220,67 +214,32 @@ namespace TerraTeam1
                         switch(this.Terrarium[x, y].ToString())
                         {
                             case "H":
-                                if (choice == 0)
-                                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
                                 break;
                             case "C":
-                                if (choice == 0)
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                    break;
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                break;
                             case "P":
-                                if (choice == 0)
-                                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                    break;
+                                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                break;
                             default:
-                                if (choice == 0)
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    break;
+                                Console.ForegroundColor = ConsoleColor.White;
+                                break;
 
                         }
-                        if (choice == 0)
-                            Console.Write(this.Terrarium[x, y].ToString());
-                        else
-                            screencontent += this.Terrarium[x, y].ToString();
+                        Console.SetCursorPosition(x, y);
+                        Console.Write(this.Terrarium[x, y].ToString());
                     }
-
                     else
                     {
-                        if (choice == 0)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.Write('.');
-                        }
-                        else
-                            screencontent += '.';
+                        Console.SetCursorPosition(x, y);
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        //Console.Write('.');
                     }
-                    if (choice == 0)
-                        Console.Write("   ");
-                    else
-                        screencontent += "   ";
-
                 }
-                if (choice == 0)
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine();
-                }
-                else
-                {
-                    screencontent += '\n';
-                    screencontent += '\n';
-                }
-
             }
-            if (choice == 0)
-            {
-                Console.Write("---------------:D------------------");
-            }
-            else
-            {
-                Console.Clear();
-                Console.Write(screencontent);
-            }
-
+            //Console.SetCursorPosition(0, GrootteY * 2);
+            //Console.Write("---------------:D------------------");
         }
     }
 }

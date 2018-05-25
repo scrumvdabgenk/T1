@@ -13,14 +13,13 @@ namespace TerraTeam1
 
         static void Main(string[] args)
         {
-            // do some Console stuff
-            Console.SetCursorPosition(0, 0);
-            //Console.BackgroundColor = ConsoleColor.White;
-            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-
             string lcInput = "";
             while (lcInput != "0")
             {
+                // do some Console stuff
+                Console.BackgroundColor = ConsoleColor.DarkGray;
+                Console.ForegroundColor = ConsoleColor.White;
+
                 Console.Clear();
                 Console.WriteLine("Terrateam");
                 Console.WriteLine("=========");
@@ -65,11 +64,16 @@ namespace TerraTeam1
         }
 
         static void DoTerrateam()
-        { 
+        {
+            // do some Console stuff
+            Console.BackgroundColor = ConsoleColor.DarkYellow;
+            Console.Clear();
+            //Console.SetWindowSize(cnGrootteY+1, cnGrootteX+1);
+            //Console.SetBufferSize(cnGrootteY+1, cnGrootteX+1);
+
             // create speelveld and additional data
             Random rnd = new Random();
-
-            Speelveld speelveld = new Speelveld(cnGrootteX, cnGrootteY);
+            Speelveld speelveld = new Speelveld(cnGrootteY, cnGrootteX);
 
             int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
             int rndValuePlant = 10;
