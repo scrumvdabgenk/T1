@@ -21,12 +21,17 @@ namespace TerraTeam1
 
         }
 
-        public void Stap(int Xpos, int Ypos)
+        public void Stap(int Xpos, int Ypos, Speelveld eoSpeelveld)
         {
+            var loTemp = eoSpeelveld.Terrarium[this.PosX, this.PosY];
+            eoSpeelveld.Terrarium[this.PosX, this.PosY] = null;
+
             this.PosX += Xpos;
             this.PosY += Ypos;
 
+            eoSpeelveld.Terrarium[this.PosX, this.PosY] = loTemp;
         }
+
         /// <summary>
         /// Mag enkel bewegen indien de bestemming "." is.
         /// </summary>
@@ -40,7 +45,7 @@ namespace TerraTeam1
                 int x = 0;
                 int y = 0;
 
-                if (eoSpeelveld.Terrarium[PosX + 1, PosY] == null)
+                if (PosX + 1 >= eoSpeelveld.GrootteX || eoSpeelveld.Terrarium[PosX + 1, PosY] == null)
                 {
                     switch (stap)
                     {
@@ -79,9 +84,9 @@ namespace TerraTeam1
                         default:
                             break;
                     }
-                    if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null)
+                    if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null || eoSpeelveld.Terrarium[PosX + x, PosY + y].Naam.ToUpper() == "P")
                     {
-                        Stap(x, y);
+                        Stap(x, y, eoSpeelveld);
                         break; //ga uit de loop
                     }
                 }

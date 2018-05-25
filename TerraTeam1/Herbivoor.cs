@@ -38,7 +38,7 @@ namespace TerraTeam1
                 // remove the plant
                 eoSpeelveld.Terrarium[PosX + 1, PosY].Delete();
                 eoSpeelveld.Terrarium[PosX + 1, PosY] = null;   // todo: move this to the delete() of the herbivoor
-
+                Stap(1, 0, eoSpeelveld);
                 this.TotAantStappen++;
             }
         }

@@ -49,6 +49,9 @@ namespace TerraTeam1
                     if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
                     {
                         this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                        p.PosX = rndValueXinp;
+                        p.PosY = rndValueYinp;
+
                         amountOfFreeFields--;
                         amountAdded++;
                         break;  // stop while-loop
@@ -75,6 +78,9 @@ namespace TerraTeam1
                     if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
                     {
                         this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                        p.PosX = rndValueXinp;
+                        p.PosY = rndValueYinp;
+
                         amountOfFreeFields--;
                         amountAdded++;
                         break;  // stop while-loop
@@ -101,6 +107,9 @@ namespace TerraTeam1
                     if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
                     {
                         this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                        p.PosX = rndValueXinp;
+                        p.PosY = rndValueYinp;
+
                         amountOfFreeFields--;
                         amountAdded++;
                         break;  // stop while-loop
@@ -192,18 +201,34 @@ namespace TerraTeam1
                 {
                     if (this.Terrarium[x, y] != null)
                     {
+                        switch(this.Terrarium[x, y].ToString())
+                        {
+                            case "H":
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                break;
+                            case "C":
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                break;
+                            case "P":
+                                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                break;
+                            default:
+                                Console.ForegroundColor = ConsoleColor.White;
+                                break;
 
+                        }
                         Console.Write(this.Terrarium[x, y].ToString());
-
                     }
 
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Gray;
                         Console.Write('.');
                     }
                     Console.Write("     ");
 
                 }
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine();

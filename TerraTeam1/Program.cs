@@ -11,31 +11,42 @@ namespace TerraTeam1
         static void Main(string[] args)
         {
             string ingave = "";
-            while (ingave != "s")
+            while (ingave.ToLower() != "s")
             {
                 Random rnd = new Random();
 
                 Speelveld speelveld = new Speelveld(6, 6);
 
                 int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
-                int rndValuePlant = rnd.Next(1, rndspeelveld);
+                int rndValuePlant = rnd.Next(1, rndspeelveld / 2);
+                int rndValueherbivoor = rnd.Next(1, rndspeelveld / 4);
+                int rndValueCarnivoor = rnd.Next(1, rndspeelveld / 5);
 
                 List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
                 speelveld.AddPlantenToSpeelveld(planten);
 
-                List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(rnd.Next(1, rndspeelveld / 6));
+                List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(rnd.Next(1, rndValueherbivoor));
+                speelveld.AddHerbivorenToSpeelveld(herbivoren);
+
+                List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(rnd.Next(1, rndValueCarnivoor));
                 speelveld.AddCarnivorenToSpeelveld(carnivoren);
 
-                List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(rnd.Next(1, rndspeelveld / 6));
-                speelveld.AddHerbivorenToSpeelveld(herbivoren);
+                speelveld.ToonSpeelveld();
+                ingave = Console.ReadLine();
+
+                foreach (Herbivoor Dier in herbivoren)
+                {
+                    Dier.Eet(speelveld);
+
+                }
 
                 speelveld.ToonSpeelveld();
                 ingave = Console.ReadLine();
             }
 
-            Console.WriteLine("druk toets");
-            Console.ReadLine();
+            //Console.WriteLine("druk toets");
+            //Console.ReadLine();
 
-        }      
+        }
     }
 }
