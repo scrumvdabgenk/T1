@@ -82,6 +82,7 @@ namespace TerraTeam1
                         this.Terrarium[rndValueXinp, rndValueYinp] = p;
                         p.PosX = rndValueXinp;
                         p.PosY = rndValueYinp;
+                        p.Levenskracht = rnd.Next(0, 100);
 
                         amountOfFreeFields--;
                         amountAdded++;
@@ -202,8 +203,14 @@ namespace TerraTeam1
 
         public void ToonSpeelveld()
         {
-            Thread.Sleep(500);
-            Console.Clear();
+            int choice = 0;
+
+            Thread.Sleep(150);
+            if (choice == 0)
+                Console.Clear();
+
+            string screencontent = "";
+
             for (int x = 0; x <= GrootteX - 1; x++)
             {
                 for (int y = 0; y <= GrootteY - 1; y++)
@@ -213,39 +220,67 @@ namespace TerraTeam1
                         switch(this.Terrarium[x, y].ToString())
                         {
                             case "H":
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                if (choice == 0)
+                                    Console.ForegroundColor = ConsoleColor.DarkRed;
                                 break;
                             case "C":
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                break;
+                                if (choice == 0)
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    break;
                             case "P":
-                                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                break;
+                                if (choice == 0)
+                                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                    break;
                             default:
-                                Console.ForegroundColor = ConsoleColor.White;
-                                break;
+                                if (choice == 0)
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
 
                         }
-                        Console.Write(this.Terrarium[x, y].ToString());
+                        if (choice == 0)
+                            Console.Write(this.Terrarium[x, y].ToString());
+                        else
+                            screencontent += this.Terrarium[x, y].ToString();
                     }
 
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                        Console.Write('.');
+                        if (choice == 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.Write('.');
+                        }
+                        else
+                            screencontent += '.';
                     }
-                    Console.Write("     ");
+                    if (choice == 0)
+                        Console.Write("   ");
+                    else
+                        screencontent += "   ";
 
                 }
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
-                
+                if (choice == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    screencontent += '\n';
+                    screencontent += '\n';
+                }
 
             }
-            Console.Write("---------------:D------------------");
+            if (choice == 0)
+            {
+                Console.Write("---------------:D------------------");
+            }
+            else
+            {
+                Console.Clear();
+                Console.Write(screencontent);
+            }
+
         }
     }
 }
