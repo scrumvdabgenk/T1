@@ -46,14 +46,20 @@ namespace TerraTeam1
 
         public Herbivoor PlantVoort(Speelveld eoSpeelveld, List<Herbivoor> eaHerbivoren)
         {
+            Random rnd = new Random();
+            int flip = rnd.Next(1, 10);
+
             // test if the animal at the right position is a herbivoor
             if (PosY + 1 < eoSpeelveld.GrootteY &&
                 eoSpeelveld.Terrarium[PosX, PosY+1] != null &&
                 eoSpeelveld.Terrarium[PosX, PosY+1].Naam.ToUpper() == "H")
             {
-                List<Herbivoor> laHerbivoren = CreateHerbivoren(1);
-               // eaHerbivoren.Add(laHerbivoren[0]);
-                return laHerbivoren[0];
+                if (flip == 1)
+                {
+                    List<Herbivoor> laHerbivoren = CreateHerbivoren(1);
+                    // eaHerbivoren.Add(laHerbivoren[0]);
+                    return laHerbivoren[0];
+                }
             }
             return null;
         }
