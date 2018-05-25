@@ -38,14 +38,14 @@ namespace TerraTeam1
         /// <param name="Beweeg"></param>
         public void Beweeg(Speelveld eoSpeelveld)
         {
+            Random rnd = new Random();
             for (int teller = 1; teller <= 100; teller++)
             {
-                Random rnd = new Random();
-                int stap = rnd.Next(1, 4);
+                int stap = rnd.Next(1, 5);
                 int x = 0;
                 int y = 0;
 
-                if (PosX + 1 >= eoSpeelveld.GrootteX || eoSpeelveld.Terrarium[PosX + 1, PosY] == null)
+                //if (PosX + 1 >= eoSpeelveld.GrootteX || eoSpeelveld.Terrarium[PosX + 1, PosY] == null)
                 {
                     switch (stap)
                     {
@@ -167,7 +167,7 @@ namespace TerraTeam1
 
         public void Delete()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override string ToString()

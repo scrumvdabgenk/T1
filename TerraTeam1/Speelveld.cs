@@ -82,6 +82,7 @@ namespace TerraTeam1
                         this.Terrarium[rndValueXinp, rndValueYinp] = p;
                         p.PosX = rndValueXinp;
                         p.PosY = rndValueYinp;
+                        p.Levenskracht = rnd.Next(0, 100);
 
                         amountOfFreeFields--;
                         amountAdded++;
@@ -202,8 +203,8 @@ namespace TerraTeam1
 
         public void ToonSpeelveld()
         {
-            Thread.Sleep(500);
-            Console.Clear();
+            Thread.Sleep(150);
+
             for (int x = 0; x <= GrootteX - 1; x++)
             {
                 for (int y = 0; y <= GrootteY - 1; y++)
@@ -226,26 +227,19 @@ namespace TerraTeam1
                                 break;
 
                         }
+                        Console.SetCursorPosition(x, y);
                         Console.Write(this.Terrarium[x, y].ToString());
                     }
-
                     else
                     {
+                        Console.SetCursorPosition(x, y);
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        Console.Write('.');
+                        //Console.Write('.');
                     }
-                    Console.Write("     ");
-
                 }
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine();
-                
-
             }
-            Console.Write("---------------:D------------------");
+            //Console.SetCursorPosition(0, GrootteY * 2);
+            //Console.Write("---------------:D------------------");
         }
     }
 }

@@ -29,34 +29,36 @@ namespace TerraTeam1
         public void Vecht(Speelveld eoSpeelveld)
         {
             // test if the animal at the right position is a carnivoor
-            if (PosX + 1 <= eoSpeelveld.GrootteX &&
-                eoSpeelveld.Terrarium[PosX + 1, PosY] != null &&
-                eoSpeelveld.Terrarium[PosX + 1, PosY].Naam.ToUpper() == "C")
+            if (PosY + 1 < eoSpeelveld.GrootteY &&
+                eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
+                eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "C")
             {
-                if (this.Levenskracht != eoSpeelveld.Terrarium[PosX + 1, PosY].Levenskracht)
+                //if (this.Levenskracht != eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht)
                 {
-                    if (this.Levenskracht > eoSpeelveld.Terrarium[PosX + 1, PosY].Levenskracht)
+                    if (this.Levenskracht > eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht)
                     {
                         // add the levenskracht of the carnivoor with the carnivoor
-                        this.Levenskracht += eoSpeelveld.Terrarium[PosX + 1, PosY].Levenskracht;
+                        this.Levenskracht += eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht;
                         // remove the other carnivoor
-                        eoSpeelveld.Terrarium[PosX + 1, PosY].Delete();
-                        eoSpeelveld.Terrarium[PosX + 1, PosY] = null;   // todo: move this to the delete() of the carnivoor
+                        eoSpeelveld.Terrarium[PosX, PosY + 1].Delete();
+                        eoSpeelveld.Terrarium[PosX, PosY + 1] = null;   // todo: move this to the delete() of the carnivoor
                     }
-
-                    if (this.Levenskracht < eoSpeelveld.Terrarium[PosX + 1, PosY].Levenskracht)
+                    else
                     {
-                        // add the levenskracht of the carnivoor with the carnivoor
-                        eoSpeelveld.Terrarium[PosX + 1, PosY].Levenskracht += this.Levenskracht;
-                        // remove the current carnivoor
-                        this.Delete();
-                        eoSpeelveld.Terrarium[PosX, PosY] = null;   // todo: move this to the delete() of the carnivoor
+                        if (this.Levenskracht < eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht)
+                        {
+                            // add the levenskracht of the carnivoor with the carnivoor
+                            eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht += this.Levenskracht;
+                            // remove the current carnivoor
+                            this.Delete();
+                            eoSpeelveld.Terrarium[PosX, PosY] = null;   // todo: move this to the delete() of the carnivoor
+                        }
                     }
                 }
-                else
-                {
-                    // not implemented, coul:d return something whatever
-                }
+                //else
+                //{
+                //    // not implemented, coul:d return something whatever
+                //}
             }
 
             this.TotAantStappen++;
@@ -65,15 +67,17 @@ namespace TerraTeam1
         public override void Eet(Speelveld eoSpeelveld)
         {
             // test if the animal at the right position is a herbivoor
-            if (PosX + 1 <= eoSpeelveld.GrootteX && 
-                eoSpeelveld.Terrarium[PosX + 1, PosY] != null && 
-                eoSpeelveld.Terrarium[PosX + 1, PosY].Naam.ToUpper() == "H")
+            if (PosY + 1 < eoSpeelveld.GrootteY && 
+                eoSpeelveld.Terrarium[PosX, PosY+1] != null && 
+                eoSpeelveld.Terrarium[PosX, PosY+1].Naam.ToUpper() == "H")
             {
-                // add the levenskracht of the carnivoor with the carnivoor
-                this.Levenskracht += eoSpeelveld.Terrarium[PosX + 1, PosY].Levenskracht;
-                // remove the carnivoor
-                eoSpeelveld.Terrarium[PosX + 1, PosY].Delete();
-                eoSpeelveld.Terrarium[PosX + 1, PosY] = null;   // todo: move this to the delete() of the carnivoor
+                // add the levenskracht of the herbivoor with the carnivoor
+                this.Levenskracht += eoSpeelveld.Terrarium[PosX, PosY+1].Levenskracht;
+                // remove the herbivoor
+                eoSpeelveld.Terrarium[PosX, PosY+1].Delete();
+                eoSpeelveld.Terrarium[PosX, PosY+1] = null;   // todo: move this to the delete() of the carnivoor
+                Stap(0, 1, eoSpeelveld);
+                this.TotAantStappen++;
             }
         }
     }
