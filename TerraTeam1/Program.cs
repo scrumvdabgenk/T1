@@ -11,16 +11,16 @@ namespace TerraTeam1
         static void Main(string[] args)
         {
             string ingave = "";
-            while (ingave.ToLower() != "s")
+            //while (ingave.ToLower() != "s")
             {
                 Random rnd = new Random();
 
-                Speelveld speelveld = new Speelveld(6, 6);
+                Speelveld speelveld = new Speelveld(4, 4);
 
                 int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
                 int rndValuePlant = rnd.Next(1, rndspeelveld / 2);
-                int rndValueherbivoor = rnd.Next(1, rndspeelveld / 4);
-                int rndValueCarnivoor = rnd.Next(1, rndspeelveld / 5);
+                int rndValueherbivoor = rnd.Next(1, rndspeelveld / 2);
+                int rndValueCarnivoor = rnd.Next(1, rndspeelveld /5);
 
                 List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
                 speelveld.AddPlantenToSpeelveld(planten);
@@ -37,11 +37,12 @@ namespace TerraTeam1
                 foreach (Herbivoor Dier in herbivoren)
                 {
                     Dier.Eet(speelveld);
-
+                    speelveld.ToonSpeelveld();
+                    ingave = Console.ReadLine();
+                    
                 }
 
-                speelveld.ToonSpeelveld();
-                ingave = Console.ReadLine();
+               
             }
 
             //Console.WriteLine("druk toets");
