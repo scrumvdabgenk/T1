@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,30 +30,32 @@ namespace TerraTeam1
         public override void Eet(Speelveld eoSpeelveld)
         {
             // test if the animal at the right position is a plant
-            if (PosX + 1 <= eoSpeelveld.GrootteX &&
-                eoSpeelveld.Terrarium[PosX + 1, PosY] != null &&
-                eoSpeelveld.Terrarium[PosX + 1, PosY].Naam.ToUpper() == "P")
+            if (PosY + 1 < eoSpeelveld.GrootteY &&
+                eoSpeelveld.Terrarium[PosX, PosY+1] != null &&
+                eoSpeelveld.Terrarium[PosX, PosY+1].Naam.ToUpper() == "P")
             {
                 // add the levenskracht of the herbivoor with the carnivoor
                 this.Levenskracht++;
                 // remove the plant
-                eoSpeelveld.Terrarium[PosX + 1, PosY].Delete();
-                eoSpeelveld.Terrarium[PosX + 1, PosY] = null;   // todo: move this to the delete() of the herbivoor
-                Stap(1, 0, eoSpeelveld);
+                eoSpeelveld.Terrarium[PosX, PosY+1].Delete();
+                eoSpeelveld.Terrarium[PosX, PosY+1] = null;   // todo: move this to the delete() of the herbivoor
+                Stap(0, 1, eoSpeelveld);
                 this.TotAantStappen++;
             }
         }
 
-        public void PlantVoort(Speelveld eoSpeelveld, List<Herbivoor> eaHerbivoren)
+        public Herbivoor PlantVoort(Speelveld eoSpeelveld, List<Herbivoor> eaHerbivoren)
         {
             // test if the animal at the right position is a herbivoor
-            if (PosX + 1 <= eoSpeelveld.GrootteX &&
-                eoSpeelveld.Terrarium[PosX + 1, PosY] != null &&
-                eoSpeelveld.Terrarium[PosX + 1, PosY].Naam.ToUpper() == "H")
+            if (PosY + 1 < eoSpeelveld.GrootteY &&
+                eoSpeelveld.Terrarium[PosX, PosY+1] != null &&
+                eoSpeelveld.Terrarium[PosX, PosY+1].Naam.ToUpper() == "H")
             {
                 List<Herbivoor> laHerbivoren = CreateHerbivoren(1);
-                eaHerbivoren.Add(laHerbivoren[0]);
+               // eaHerbivoren.Add(laHerbivoren[0]);
+                return laHerbivoren[0];
             }
+            return null;
         }
     }
 }
