@@ -84,11 +84,18 @@ namespace TerraTeam1
                         default:
                             break;
                     }
-                    if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null || eoSpeelveld.Terrarium[PosX + x, PosY + y].Naam.ToUpper() == "P")
+                    if (PosX + x < eoSpeelveld.GrootteX && PosY + y < eoSpeelveld.GrootteY)
                     {
-                        Stap(x, y, eoSpeelveld);
-                        break; //ga uit de loop
+
+                        if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null || eoSpeelveld.Terrarium[PosX + x, PosY + y].Naam.ToUpper() == "P")
+                        {
+                            Stap(x, y, eoSpeelveld);
+                            break; //ga uit de loop
+                        }
                     }
+                    
+                             
+                 
                 }
             }
 

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TerraTeam1
@@ -92,6 +94,11 @@ namespace TerraTeam1
 
         public int AddHerbivorenToSpeelveld(List<Herbivoor> Herbivoren)
         {
+            if (Herbivoren == null)
+            {
+                return 0;
+            }
+
             Random rnd = new Random();
             int amountOfFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
             int amountAdded = 0;
@@ -195,6 +202,8 @@ namespace TerraTeam1
 
         public void ToonSpeelveld()
         {
+            Thread.Sleep(500);
+            Console.Clear();
             for (int x = 0; x <= GrootteX - 1; x++)
             {
                 for (int y = 0; y <= GrootteY - 1; y++)
@@ -233,9 +242,10 @@ namespace TerraTeam1
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine();
+                
 
             }
+            Console.Write("---------------:D------------------");
         }
-
     }
 }
