@@ -69,7 +69,7 @@ namespace TerraTeam1
             // create speelveld and additional data
             Random rnd = new Random();
 
-            Speelveld speelveld = new Speelveld(cnGrootteX, cnGrootteY);
+            Speelveld speelveld = new Speelveld(cnGrootteX, cnGrootteY); 
 
             int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
             int rndValuePlant = 10;

@@ -205,7 +205,7 @@ namespace TerraTeam1
         {
             int choice = 0;
 
-            Thread.Sleep(150);
+            Thread.Sleep(10);
             if (choice == 0)
                 Console.Clear();
 
