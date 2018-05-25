@@ -92,7 +92,7 @@ namespace TerraTeam1
 
         public void Delete()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override string ToString()
