@@ -29,7 +29,9 @@ namespace UnitTestTerraTeam1
             List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
             speelveld.AddPlantenToSpeelveld(planten);
             Assert.AreEqual(speelveld.CountAmounOfPlantsInSpeelveld(), rndValuePlant);
-
+            Assert.AreEqual(speelveld.CountAmounOfEmptyFieldsInSpeelveld(), 36 - rndValuePlant);
+            Assert.AreEqual(speelveld.CountAmounOfHerbivorenInSpeelveld(), 0);
+            Assert.AreEqual(speelveld.CountAmounOfCarnivorenInSpeelveld(), 0);
         }
 
         [TestMethod]

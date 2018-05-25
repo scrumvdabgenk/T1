@@ -36,93 +36,78 @@ namespace TerraTeam1
         public int AddPlantenToSpeelveld(List<Plant> Planten)
         {
             Random rnd = new Random();
-            int amFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+            int amountOfFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+            int amountAdded = 0;
 
             foreach (var p in Planten)
             {
-                if (amFreeFields < (this.GrootteX * this.GrootteY))
+                while (amountOfFreeFields > 0)
                 {
-                    while (true)
-                    {
-                        int rndValueXinp = rnd.Next(0, this.GrootteX);
-                        int rndValueYinp = rnd.Next(0, this.GrootteY);
+                    int rndValueXinp = rnd.Next(0, this.GrootteX);
+                    int rndValueYinp = rnd.Next(0, this.GrootteY);
 
-                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
-                        {
-                            this.Terrarium[rndValueXinp, rndValueYinp] = p;
-                            break;
-                        }
+                    if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                    {
+                        this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                        amountOfFreeFields--;
+                        amountAdded++;
+                        break;  // stop while-loop
                     }
                 }
-                else
-                {
-                    break;  // stop foreach loop
-                }
-                amFreeFields++;
             }
-            return amFreeFields;
+            return amountAdded;
         }
 
         public int AddCarnivorenToSpeelveld(List<Carnivoor> Carnivoren)
         {
             Random rnd = new Random();
-            int amFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+            int amountOfFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+            int amountAdded = 0;
 
             foreach (var p in Carnivoren)
             {
-                if (amFreeFields < (this.GrootteX * this.GrootteY))
+                while (amountOfFreeFields > 0)
                 {
-                    while (true)
-                    {
-                        int rndValueXinp = rnd.Next(0, this.GrootteX);
-                        int rndValueYinp = rnd.Next(0, this.GrootteY);
+                    int rndValueXinp = rnd.Next(0, this.GrootteX);
+                    int rndValueYinp = rnd.Next(0, this.GrootteY);
 
-                        // test if the animal can be put on an empty place
-                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
-                        {
-                            this.Terrarium[rndValueXinp, rndValueYinp] = p;
-                            break;
-                        }
+                    // test if the animal can be put on an empty place
+                    if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                    {
+                        this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                        amountOfFreeFields--;
+                        amountAdded++;
+                        break;  // stop while-loop
                     }
                 }
-                else
-                {
-                    break;  // stop foreach loop
-                }
-                amFreeFields++;
             }
-            return amFreeFields;
+            return amountAdded;
         }
 
         public int AddHerbivorenToSpeelveld(List<Herbivoor> Herbivoren)
         {
             Random rnd = new Random();
-            int amFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+            int amountOfFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+            int amountAdded = 0;
 
             foreach (var p in Herbivoren)
             {
-                if (amFreeFields < (this.GrootteX * this.GrootteY))
+                while (amountOfFreeFields > 0)
                 {
-                    while (true)
-                    {
-                        int rndValueXinp = rnd.Next(0, this.GrootteX);
-                        int rndValueYinp = rnd.Next(0, this.GrootteY);
+                    int rndValueXinp = rnd.Next(0, this.GrootteX);
+                    int rndValueYinp = rnd.Next(0, this.GrootteY);
 
-                        // test if the animal can be put on an empty place
-                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
-                        {
-                            this.Terrarium[rndValueXinp, rndValueYinp] = p;
-                            break;
-                        }
+                    // test if the animal can be put on an empty place
+                    if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                    {
+                        this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                        amountOfFreeFields--;
+                        amountAdded++;
+                        break;  // stop while-loop
                     }
                 }
-                else
-                {
-                    break;  // stop foreach loop
-                }
-                amFreeFields++;
             }
-            return amFreeFields;
+            return amountAdded;
         }
 
         public int CountAmounOfPlantsInSpeelveld()
@@ -171,7 +156,7 @@ namespace TerraTeam1
                 {
                     if (this.Terrarium[x, y] != null)
                     {
-                        if (this.Terrarium[x, y].GetType() == typeof(Herbivoor))
+                        if (this.Terrarium[x, y].GetType() == typeof(Carnivoor))
                             amount++;
                     }
                 }
@@ -187,11 +172,8 @@ namespace TerraTeam1
             {
                 for (int y = 0; y < this.GrootteY; y++)
                 {
-                    if (this.Terrarium[x, y] != null)
-                    {
-                        if (this.Terrarium[x, y] == null)
-                            amount++;
-                    }
+                    if (this.Terrarium[x, y] == null)
+                        amount++;
                 }
             }
             return amount;
