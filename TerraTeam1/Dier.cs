@@ -13,6 +13,7 @@ namespace TerraTeam1
         private int posyValue;
         private int levenskrachtValue;
         private int totaantStappenValue;
+        private bool isDeletedValue;
 
         // constructor
         public Dier()
@@ -23,13 +24,12 @@ namespace TerraTeam1
 
         public void Stap(int Xpos, int Ypos, Speelveld eoSpeelveld)
         {
-            var loTemp = eoSpeelveld.Terrarium[this.PosX, this.PosY];
             eoSpeelveld.Terrarium[this.PosX, this.PosY] = null;
 
             this.PosX += Xpos;
             this.PosY += Ypos;
 
-            eoSpeelveld.Terrarium[this.PosX, this.PosY] = loTemp;
+            eoSpeelveld.Terrarium[this.PosX, this.PosY] = this;
         }
 
         /// <summary>
@@ -38,67 +38,66 @@ namespace TerraTeam1
         /// <param name="Beweeg"></param>
         public void Beweeg(Speelveld eoSpeelveld)
         {
-            Random rnd = new Random();
-            for (int teller = 1; teller <= 100; teller++)
+            if (this.TotAantStappen <= 0)
             {
-                int stap = rnd.Next(1, 5);
-                int x = 0;
-                int y = 0;
-
-                //if (PosX + 1 >= eoSpeelveld.GrootteX || eoSpeelveld.Terrarium[PosX + 1, PosY] == null)
+                Random rnd = new Random();
+                for (int teller = 1; teller <= 100; teller++)
                 {
-                    switch (stap)
-                    {
-                        case 1:
-                            x = 1;
-                            y = 0;
-                            if (PosX + 1 > eoSpeelveld.GrootteX)
-                            {
-                                x = 0;
-                            }
-                            break;
-                        case 2:
-                            x = 0;
-                            y = 1;
-                            if (PosY + 1 > eoSpeelveld.GrootteY)
-                            {
-                                y = 0;
-                            }
-                            break;
-                        case 3:
-                            x = -1;
-                            y = 0;
-                            if (PosX - 1 < 0)
-                            {
-                                x = 0;
-                            }
-                            break;
-                        case 4:
-                            x = 0;
-                            y = -1;
-                            if (PosY - 1 < 0)
-                            {
-                                y = 0;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    if (PosX + x < eoSpeelveld.GrootteX && PosY + y < eoSpeelveld.GrootteY)
-                    {
+                    int stap = rnd.Next(1, 5);
+                    int x = 0;
+                    int y = 0;
 
-                        if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null || eoSpeelveld.Terrarium[PosX + x, PosY + y].Naam.ToUpper() == "P")
+                    //if (PosX + 1 >= eoSpeelveld.GrootteX || eoSpeelveld.Terrarium[PosX + 1, PosY] == null)
+                    {
+                        switch (stap)
                         {
-                            Stap(x, y, eoSpeelveld);
-                            break; //ga uit de loop
+                            case 1:
+                                x = 1;
+                                y = 0;
+                                if (PosX + 1 > eoSpeelveld.GrootteX)
+                                {
+                                    x = 0;
+                                }
+                                break;
+                            case 2:
+                                x = 0;
+                                y = 1;
+                                if (PosY + 1 > eoSpeelveld.GrootteY)
+                                {
+                                    y = 0;
+                                }
+                                break;
+                            case 3:
+                                x = -1;
+                                y = 0;
+                                if (PosX - 1 < 0)
+                                {
+                                    x = 0;
+                                }
+                                break;
+                            case 4:
+                                x = 0;
+                                y = -1;
+                                if (PosY - 1 < 0)
+                                {
+                                    y = 0;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        if (PosX + x < eoSpeelveld.GrootteX && PosY + y < eoSpeelveld.GrootteY)
+                        {
+
+                            if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null || eoSpeelveld.Terrarium[PosX + x, PosY + y].Naam.ToUpper() == "P")
+                            {
+                                Stap(x, y, eoSpeelveld);
+                                break; //ga uit de loop
+                            }
                         }
                     }
-                    
-                             
-                 
                 }
             }
-
         }
 
         public virtual void Eet(Speelveld eoSpeelveld)
@@ -164,9 +163,22 @@ namespace TerraTeam1
             }
         }
 
+        public bool IsDeleted
+        {
+            get
+            {
+                return this.isDeletedValue;
+            }
+
+            set
+            {
+                this.isDeletedValue = value;
+            }
+        }
 
         public void Delete()
         {
+            this.isDeletedValue = true;
             //throw new NotImplementedException();
         }
 

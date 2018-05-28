@@ -29,36 +29,42 @@ namespace TerraTeam1
 
         public override void Eet(Speelveld eoSpeelveld)
         {
-            // test if the animal at the right position is a plant
-            if (PosY + 1 < eoSpeelveld.GrootteY &&
-                eoSpeelveld.Terrarium[PosX, PosY+1] != null &&
-                eoSpeelveld.Terrarium[PosX, PosY+1].Naam.ToUpper() == "P")
+            if (this.TotAantStappen <= 0)
             {
-                // add the levenskracht of the herbivoor with the carnivoor
-                this.Levenskracht++;
-                // remove the plant
-                eoSpeelveld.Terrarium[PosX, PosY+1].Delete();
-                eoSpeelveld.Terrarium[PosX, PosY+1] = null;   // todo: move this to the delete() of the herbivoor
-                Stap(0, 1, eoSpeelveld);
-                this.TotAantStappen++;
+                // test if the animal at the right position is a plant
+                if (PosY + 1 < eoSpeelveld.GrootteY &&
+                    eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
+                    eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "P")
+                {
+                    // add the levenskracht of the herbivoor with the carnivoor
+                    this.Levenskracht++;
+                    // remove the plant
+                    eoSpeelveld.Terrarium[PosX, PosY + 1].Delete();
+                    eoSpeelveld.Terrarium[PosX, PosY + 1] = null;   // todo: move this to the delete() of the herbivoor
+                    Stap(0, 1, eoSpeelveld);
+                    this.TotAantStappen++;
+                }
             }
         }
 
         public Herbivoor PlantVoort(Speelveld eoSpeelveld, List<Herbivoor> eaHerbivoren)
         {
-            Random rnd = new Random();
-            int flip = rnd.Next(1, 10);
-
-            // test if the animal at the right position is a herbivoor
-            if (PosY + 1 < eoSpeelveld.GrootteY &&
-                eoSpeelveld.Terrarium[PosX, PosY+1] != null &&
-                eoSpeelveld.Terrarium[PosX, PosY+1].Naam.ToUpper() == "H")
+            if (this.TotAantStappen <= 0)
             {
-                if (flip == 1)
+                Random rnd = new Random();
+                int flip = rnd.Next(1, 10);
+
+                // test if the animal at the right position is a herbivoor
+                if (PosY + 1 < eoSpeelveld.GrootteY &&
+                    eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
+                    eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "H")
                 {
-                    List<Herbivoor> laHerbivoren = CreateHerbivoren(1);
-                    // eaHerbivoren.Add(laHerbivoren[0]);
-                    return laHerbivoren[0];
+                    if (flip == 1 || true)  // tricky!!!!
+                    {
+                        List<Herbivoor> laHerbivoren = CreateHerbivoren(1);
+                        this.TotAantStappen++;
+                        return laHerbivoren[0];
+                    }
                 }
             }
             return null;

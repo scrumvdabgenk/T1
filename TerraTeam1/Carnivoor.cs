@@ -28,12 +28,12 @@ namespace TerraTeam1
 
         public void Vecht(Speelveld eoSpeelveld)
         {
-            // test if the animal at the right position is a carnivoor
-            if (PosY + 1 < eoSpeelveld.GrootteY &&
+            if (this.TotAantStappen <= 0)
+            {
+                // test if the animal at the right position is a carnivoor
+                if (PosY + 1 < eoSpeelveld.GrootteY &&
                 eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
                 eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "C")
-            {
-                //if (this.Levenskracht != eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht)
                 {
                     if (this.Levenskracht > eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht)
                     {
@@ -55,29 +55,27 @@ namespace TerraTeam1
                         }
                     }
                 }
-                //else
-                //{
-                //    // not implemented, coul:d return something whatever
-                //}
+                this.TotAantStappen++;
             }
-
-            this.TotAantStappen++;
         }
 
         public override void Eet(Speelveld eoSpeelveld)
         {
-            // test if the animal at the right position is a herbivoor
-            if (PosY + 1 < eoSpeelveld.GrootteY && 
-                eoSpeelveld.Terrarium[PosX, PosY+1] != null && 
-                eoSpeelveld.Terrarium[PosX, PosY+1].Naam.ToUpper() == "H")
+            if (this.TotAantStappen <= 0)
             {
-                // add the levenskracht of the herbivoor with the carnivoor
-                this.Levenskracht += eoSpeelveld.Terrarium[PosX, PosY+1].Levenskracht;
-                // remove the herbivoor
-                eoSpeelveld.Terrarium[PosX, PosY+1].Delete();
-                eoSpeelveld.Terrarium[PosX, PosY+1] = null;   // todo: move this to the delete() of the carnivoor
-                Stap(0, 1, eoSpeelveld);
-                this.TotAantStappen++;
+                // test if the animal at the right position is a herbivoor
+                if (PosY + 1 < eoSpeelveld.GrootteY &&
+                    eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
+                    eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "H")
+                {
+                    // add the levenskracht of the herbivoor with the carnivoor
+                    this.Levenskracht += eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht;
+                    // remove the herbivoor
+                    eoSpeelveld.Terrarium[PosX, PosY + 1].Delete();
+                    eoSpeelveld.Terrarium[PosX, PosY + 1] = null;   // todo: move this to the delete() of the carnivoor
+                    Stap(0, 1, eoSpeelveld);
+                    this.TotAantStappen++;
+                }
             }
         }
     }

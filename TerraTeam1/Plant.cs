@@ -12,6 +12,7 @@ namespace TerraTeam1
         private int posYValue;
         private string naamValue;
         private int levenskrachtValue;
+        private bool isDeletedValue;
 
         public Plant()
         {
@@ -90,9 +91,22 @@ namespace TerraTeam1
             }
         }
 
+        public bool IsDeleted
+        {
+            get
+            {
+                return this.isDeletedValue;
+            }
+
+            set
+            {
+                this.isDeletedValue = value;
+            }
+        }
+
         public void Delete()
         {
-            //throw new NotImplementedException();
+            this.isDeletedValue = true;
         }
 
         public override string ToString()

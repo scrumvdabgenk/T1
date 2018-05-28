@@ -35,7 +35,13 @@ namespace TerraTeam1
             Terrarium = new IOrganismen[GrootteX, GrootteY];
         }
 
-        public int AddPlantenToSpeelveld(List<Plant> Planten)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Planten"></param>
+        /// <param name="elDontFillInRandomValues">if True, the fields XPOS, YPOS, levenskracht will not be filled in with random values</param>
+        /// <returns></returns>
+        public int AddPlantenToSpeelveld(List<Plant> Planten, bool elDontFillInRandomValues = false)
         {
             Random rnd = new Random();
             int amountOfFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
@@ -43,27 +49,43 @@ namespace TerraTeam1
 
             foreach (var p in Planten)
             {
-                while (amountOfFreeFields > 0)
+                if (!p.IsDeleted)
                 {
-                    int rndValueXinp = rnd.Next(0, this.GrootteX);
-                    int rndValueYinp = rnd.Next(0, this.GrootteY);
-
-                    if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                    while (amountOfFreeFields > 0)
                     {
-                        this.Terrarium[rndValueXinp, rndValueYinp] = p;
-                        p.PosX = rndValueXinp;
-                        p.PosY = rndValueYinp;
+                        int rndValueXinp = rnd.Next(0, this.GrootteX);
+                        int rndValueYinp = rnd.Next(0, this.GrootteY);
 
-                        amountOfFreeFields--;
-                        amountAdded++;
-                        break;  // stop while-loop
+                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                        {
+                            if (elDontFillInRandomValues == true)
+                            {
+                                this.Terrarium[p.PosX, p.PosY] = p;
+                            }
+                            else
+                            {
+                                this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                                p.PosX = rndValueXinp;
+                                p.PosY = rndValueYinp;
+                            }
+
+                            amountOfFreeFields--;
+                            amountAdded++;
+                            break;  // stop while-loop
+                        }
                     }
                 }
             }
             return amountAdded;
         }
 
-        public int AddCarnivorenToSpeelveld(List<Carnivoor> Carnivoren)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Carnivoren"></param>
+        /// <param name="elDontFillInRandomValues">if True, the fields XPOS, YPOS, levenskracht will not be filled in with random values</param>
+        /// <returns></returns>
+        public int AddCarnivorenToSpeelveld(List<Carnivoor> Carnivoren, bool elDontFillInRandomValues = false)
         {
             Random rnd = new Random();
             int amountOfFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
@@ -71,29 +93,45 @@ namespace TerraTeam1
 
             foreach (var p in Carnivoren)
             {
-                while (amountOfFreeFields > 0)
+                if (!p.IsDeleted)
                 {
-                    int rndValueXinp = rnd.Next(0, this.GrootteX);
-                    int rndValueYinp = rnd.Next(0, this.GrootteY);
-
-                    // test if the animal can be put on an empty place
-                    if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                    while (amountOfFreeFields > 0)
                     {
-                        this.Terrarium[rndValueXinp, rndValueYinp] = p;
-                        p.PosX = rndValueXinp;
-                        p.PosY = rndValueYinp;
-                        p.Levenskracht = rnd.Next(0, 100);
+                        int rndValueXinp = rnd.Next(0, this.GrootteX);
+                        int rndValueYinp = rnd.Next(0, this.GrootteY);
 
-                        amountOfFreeFields--;
-                        amountAdded++;
-                        break;  // stop while-loop
+                        // test if the animal can be put on an empty place
+                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                        {
+                            if (elDontFillInRandomValues == true)
+                            {
+                                this.Terrarium[p.PosX, p.PosY] = p;
+                            }
+                            else
+                            {
+                                this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                                p.PosX = rndValueXinp;
+                                p.PosY = rndValueYinp;
+                                p.Levenskracht = rnd.Next(0, 100);
+                            }
+
+                            amountOfFreeFields--;
+                            amountAdded++;
+                            break;  // stop while-loop
+                        }
                     }
                 }
             }
             return amountAdded;
         }
 
-        public int AddHerbivorenToSpeelveld(List<Herbivoor> Herbivoren)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Herbivoren"></param>
+        /// <param name="elDontFillInRandomValues">if True, the fields XPOS, YPOS, levenskracht will not be filled in with random values</param>
+        /// <returns></returns>
+        public int AddHerbivorenToSpeelveld(List<Herbivoor> Herbivoren, bool elDontFillInRandomValues = false)
         {
             if (Herbivoren == null)
             {
@@ -106,21 +144,32 @@ namespace TerraTeam1
 
             foreach (var p in Herbivoren)
             {
-                while (amountOfFreeFields > 0)
+                if (!p.IsDeleted)
                 {
-                    int rndValueXinp = rnd.Next(0, this.GrootteX);
-                    int rndValueYinp = rnd.Next(0, this.GrootteY);
-
-                    // test if the animal can be put on an empty place
-                    if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                    while (amountOfFreeFields > 0)
                     {
-                        this.Terrarium[rndValueXinp, rndValueYinp] = p;
-                        p.PosX = rndValueXinp;
-                        p.PosY = rndValueYinp;
+                        int rndValueXinp = rnd.Next(0, this.GrootteX);
+                        int rndValueYinp = rnd.Next(0, this.GrootteY);
 
-                        amountOfFreeFields--;
-                        amountAdded++;
-                        break;  // stop while-loop
+                        // test if the animal can be put on an empty place
+                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                        {
+                            if (elDontFillInRandomValues == true)
+                            {
+                                this.Terrarium[p.PosX, p.PosY] = p;
+                            }
+                            else
+                            {
+                                this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                                p.PosX = rndValueXinp;
+                                p.PosY = rndValueYinp;
+                                p.Levenskracht = rnd.Next(0, 100);
+                            }
+
+                            amountOfFreeFields--;
+                            amountAdded++;
+                            break;  // stop while-loop
+                        }
                     }
                 }
             }
@@ -201,17 +250,17 @@ namespace TerraTeam1
             return this.Terrarium;
         }
 
-        public void ToonSpeelveld()
+        public void ToonSpeelveld(int enOffsetX = 0, int enOffsetY = 0, string ecFooter = "")
         {
             Thread.Sleep(150);
 
-            for (int x = 0; x <= GrootteX - 1; x++)
+            for (int y = 0; y <= GrootteX - 1; y++)
             {
-                for (int y = 0; y <= GrootteY - 1; y++)
+                for (int x = 0; x <= GrootteY - 1; x++)
                 {
-                    if (this.Terrarium[x, y] != null)
+                    if (this.Terrarium[y, x] != null)
                     {
-                        switch(this.Terrarium[x, y].ToString())
+                        switch (this.Terrarium[y, x].ToString())
                         {
                             case "H":
                                 Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -227,19 +276,135 @@ namespace TerraTeam1
                                 break;
 
                         }
-                        Console.SetCursorPosition(x, y);
-                        Console.Write(this.Terrarium[x, y].ToString());
+                        Console.SetCursorPosition(x + enOffsetX, y + enOffsetY);
+                        Console.Write(this.Terrarium[y, x].ToString());
                     }
                     else
                     {
-                        Console.SetCursorPosition(x, y);
+                        Console.SetCursorPosition(x + enOffsetX, y + enOffsetY);
                         Console.ForegroundColor = ConsoleColor.Gray;
                         //Console.Write('.');
                     }
                 }
             }
+
+            if (!String.IsNullOrEmpty(ecFooter))
+            {
+                Console.SetCursorPosition(enOffsetX, GrootteY * 2);
+                Console.Write(ecFooter);
+            }
+
             //Console.SetCursorPosition(0, GrootteY * 2);
-            //Console.Write("---------------:D------------------");
+            //Console.WriteLine("Press a key");
+            //Console.ReadLine();
+        }
+
+        public int ResetAllStappen(List<Herbivoor> Herbivoren, List<Carnivoor> Carnivoren)
+        {
+            return this.ResetAllStappenHerbivoren(Herbivoren) + this.ResetAllStappenCarnivoren(Carnivoren);
+        }
+
+        public int ResetAllStappenHerbivoren(List<Herbivoor> Herbivoren)
+        {
+            int lnAmReset = 0;
+            foreach (Herbivoor H in Herbivoren)
+            {
+                if (!H.IsDeleted)
+                {
+                    if (H.TotAantStappen > 0)
+                    {
+                        H.TotAantStappen = 0;
+                        lnAmReset++;
+                    }
+                }
+            }
+            return lnAmReset;
+        }
+
+        public int ResetAllStappenCarnivoren(List<Carnivoor> Carnivoren)
+        {
+            int lnAmReset = 0;
+            foreach (Carnivoor H in Carnivoren)
+            {
+                if (!H.IsDeleted)
+                {
+                    if (H.TotAantStappen > 0)
+                    {
+                        H.TotAantStappen = 0;
+                        lnAmReset++;
+                    }
+                }
+            }
+            return lnAmReset;
+        }
+
+        public int DoActionsOf1Day(List<Carnivoor> carnivoren, List<Herbivoor> herbivoren, List<Plant> planten, int enOffsetX = 0)
+        {
+            int lnOffset = 0;
+
+            this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Start");
+            lnOffset++;
+
+            List<Herbivoor> nieuweherbivoren = new List<Herbivoor>();
+
+            /////////////////////////////////////////////////
+            // carnivoren business
+            /////////////////////////////////////////////////
+            foreach (Carnivoor C in carnivoren)
+            {
+                if (!C.IsDeleted)
+                {
+                    C.Eet(this);
+                    C.Vecht(this);
+                    C.Beweeg(this);
+
+                    this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Carni");
+                    lnOffset++;
+                }
+            }
+
+            /////////////////////////////////////////////////
+            // herbivoren business
+            /////////////////////////////////////////////////
+            foreach (Herbivoor H in herbivoren)
+            {
+                if (!H.IsDeleted)
+                {
+                    H.Eet(this);
+                    H.Beweeg(this);
+                    Herbivoor nieuweherbivoor = H.PlantVoort(this, herbivoren);
+                    if (nieuweherbivoor != null)
+                    {
+                        nieuweherbivoren.Add(nieuweherbivoor);
+                    }
+                    this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Herbi");
+                    lnOffset++;
+                }
+            }
+            this.AddHerbivorenToSpeelveld(nieuweherbivoren);
+            if (nieuweherbivoren != null)
+            {
+                foreach (Herbivoor Dier in nieuweherbivoren)
+                {
+                    herbivoren.Add(Dier);
+                }
+            }
+            this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Paren");
+            lnOffset++;
+
+            /////////////////////////////////////////////////
+            // planten business
+            /////////////////////////////////////////////////
+            List<Plant> nieuweplanten = Plant.CreatePlanten((this.GrootteX * this.GrootteY) / 12);
+            this.AddPlantenToSpeelveld(nieuweplanten);
+            foreach (var plant in nieuweplanten)
+            {
+                planten.Add(plant);
+            }
+            this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Plant");
+            lnOffset++;
+
+            return 0;
         }
     }
 }
