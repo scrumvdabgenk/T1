@@ -89,7 +89,7 @@ namespace TerraTeam1
                         if (PosX + x < eoSpeelveld.GrootteX && PosY + y < eoSpeelveld.GrootteY)
                         {
 
-                            if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null || eoSpeelveld.Terrarium[PosX + x, PosY + y].Naam.ToUpper() == "P")
+                            if (eoSpeelveld.Terrarium[PosX + x, PosY + y] == null || eoSpeelveld.Terrarium[PosX + x, PosY + y].GetType() == typeof(Plant))
                             {
                                 Stap(x, y, eoSpeelveld);
                                 break; //ga uit de loop

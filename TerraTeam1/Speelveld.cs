@@ -406,5 +406,35 @@ namespace TerraTeam1
 
             return 0;
         }
+
+        public int RemoveDeletedHerbivoren(ref List<Herbivoor> eoHerbivoren)
+        {
+            int lnAmDeleted = 0;
+
+            for (int x = eoHerbivoren.Count - 1; x > 0; x--)
+            {
+                if (eoHerbivoren[x].IsDeleted)
+                {
+                    eoHerbivoren.Remove(eoHerbivoren[x]);
+                    lnAmDeleted++;
+                }
+            }
+            return lnAmDeleted;
+        }
+
+        public int RemoveDeletedCarnivoren(ref List<Carnivoor> eoCarnivoren)
+        {
+            int lnAmDeleted = 0;
+
+            for (int x = eoCarnivoren.Count - 1; x > 0; x--)
+            {
+                if (eoCarnivoren[x].IsDeleted)
+                {
+                    eoCarnivoren.Remove(eoCarnivoren[x]);
+                    lnAmDeleted++;
+                }
+            }
+            return lnAmDeleted;
+        }
     }
 }

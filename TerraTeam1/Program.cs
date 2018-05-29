@@ -111,7 +111,10 @@ namespace TerraTeam1
                 speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten);
 
                 speelveld.ToonSpeelveld();
+
                 speelveld.ResetAllStappen(herbivoren, carnivoren);
+                speelveld.RemoveDeletedCarnivoren(ref carnivoren);
+                speelveld.RemoveDeletedHerbivoren(ref herbivoren);
             }
             Console.CursorVisible = true;
         }
