@@ -34,7 +34,7 @@ namespace TerraTeam1
                 // test if the animal at the right position is a plant
                 if (PosY + 1 < eoSpeelveld.GrootteY &&
                     eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
-                    eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "P")
+                    eoSpeelveld.Terrarium[PosX, PosY + 1].GetType() == typeof(Plant))
                 {
                     // add the levenskracht of the herbivoor with the carnivoor
                     this.Levenskracht++;
@@ -57,7 +57,7 @@ namespace TerraTeam1
                 // test if the animal at the right position is a herbivoor
                 if (PosY + 1 < eoSpeelveld.GrootteY &&
                     eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
-                    eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "H")
+                    eoSpeelveld.Terrarium[PosX, PosY + 1].GetType() == typeof(Herbivoor))
                 {
                     if (flip == 1 || true)  // tricky!!!!
                     {
