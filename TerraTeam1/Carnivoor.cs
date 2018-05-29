@@ -38,9 +38,10 @@ namespace TerraTeam1
                     dier = (Dier)eoSpeelveld.Terrarium[PosX, PosY + 1];
                 }
                 // test if the animal at the right position is a carnivoor
-                if (PosY + 1 < eoSpeelveld.GrootteY &&
-                eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
-                eoSpeelveld.Terrarium[PosX, PosY + 1].GetType() == typeof(Carnivoor))
+                if ((PosY + 1 < eoSpeelveld.GrootteY
+                    && eoSpeelveld.Terrarium[PosX, PosY + 1] != null)
+                    && (eoSpeelveld.Terrarium[PosX, PosY + 1].GetType() == typeof(Carnivoor)
+                    || eoSpeelveld.Terrarium[PosX, PosY + 1].GetType() == typeof(Mens)))
                 {
                     if (this.Levenskracht > eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht)
                     {
