@@ -276,6 +276,7 @@ namespace TerraTeam1
                                 break;
 
                         }
+                        Console.SetBufferSize(300, 300);
                         Console.SetCursorPosition(x + enOffsetX, y + enOffsetY);
                         Console.Write(this.Terrarium[y, x].ToString());
                     }

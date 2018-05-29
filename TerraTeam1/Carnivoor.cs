@@ -30,6 +30,13 @@ namespace TerraTeam1
         {
             if (this.TotAantStappen <= 0)
             {
+                Dier dier = null;
+
+                if ((PosY + 1 < eoSpeelveld.GrootteY)
+                    && (eoSpeelveld.Terrarium[PosX, PosY + 1].GetType() == typeof(Dier)))
+                {
+                    dier = (Dier)eoSpeelveld.Terrarium[PosX, PosY + 1];
+                }
                 // test if the animal at the right position is a carnivoor
                 if (PosY + 1 < eoSpeelveld.GrootteY &&
                 eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
@@ -59,7 +66,7 @@ namespace TerraTeam1
             }
         }
 
-        public override void Eet(Speelveld eoSpeelveld)
+        public override void Eet(Speelveld eoSpeelveld, Dier dier)
         {
             if (this.TotAantStappen <= 0)
             {
