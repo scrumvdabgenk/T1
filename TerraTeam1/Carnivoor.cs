@@ -26,7 +26,7 @@ namespace TerraTeam1
         }
 
 
-        public void Vecht(Speelveld eoSpeelveld)
+        public virtual void Vecht(Speelveld eoSpeelveld)
         {
             if (this.TotAantStappen <= 0)
             {

@@ -8,13 +8,14 @@ namespace TerraTeam1
 {
     class Mens : Carnivoor
     {
-        public override void Vecht(Speelveld eoSpeelveld) {
+        public override void Vecht(Speelveld eoSpeelveld)
+        {
             if (this.TotAantStappen <= 0)
             {
                 // test if the animal at the right position is a carnivoor
-                if (PosY + 1 < eoSpeelveld.GrootteY &&
-                eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
-                eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "C")
+                if (PosY + 1 < eoSpeelveld.GrootteY
+                    && eoSpeelveld.Terrarium[PosX, PosY + 1] != null
+                    && eoSpeelveld.Terrarium[PosX, PosY + 1].GetType() == typeof(Carnivoor))
                 {
                     if (this.Levenskracht > eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht)
                     {
@@ -37,7 +38,6 @@ namespace TerraTeam1
                         }
                     }
                 }
-                //this.TotAantStappen++;
             }
         }
 
