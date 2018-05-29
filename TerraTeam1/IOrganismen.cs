@@ -12,7 +12,7 @@ namespace TerraTeam1
         int PosX { get; set; }
         int PosY { get; set; }
         string Naam { get; set; }
-
+        bool IsDeleted { get; set; }
 
         void Delete();
 

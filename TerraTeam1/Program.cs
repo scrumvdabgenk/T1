@@ -13,19 +13,21 @@ namespace TerraTeam1
 
         static void Main(string[] args)
         {
-            // do some Console stuff
-            Console.SetCursorPosition(0, 0);
-            //Console.BackgroundColor = ConsoleColor.White;
-            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-
             string lcInput = "";
             while (lcInput != "0")
             {
+                // do some Console stuff
+                Console.BackgroundColor = ConsoleColor.DarkGray;
+                Console.ForegroundColor = ConsoleColor.White;
+
                 Console.Clear();
                 Console.WriteLine("Terrateam");
                 Console.WriteLine("=========");
                 Console.WriteLine("1) start terrateam (press ESC to stop terrateam)");
                 Console.WriteLine("2) setup");
+                Console.WriteLine("3) do internal test 1");
+                Console.WriteLine("4) do internal test 2");
+                Console.WriteLine("5) do internal test 3");
                 Console.WriteLine("0) stop");
 
                 lcInput = Console.ReadLine();
@@ -38,8 +40,16 @@ namespace TerraTeam1
                     case "2":
                         ChangeSetup();
                         break;
+                    case "3":
+                        DoTest1();
+                        break;
+                    case "4":
+                        DoTest2();
+                        break;
+                    case "5":
+                        DoTest3();
+                        break;
                 }
-
             }
         }
 
@@ -65,16 +75,22 @@ namespace TerraTeam1
         }
 
         static void DoTerrateam()
-        { 
+        {
+            // do some Console stuff
+            Console.BackgroundColor = ConsoleColor.DarkYellow;
+            Console.CursorVisible = false;
+            Console.Clear();
+            //Console.SetWindowSize(cnGrootteY+1, cnGrootteX+1);
+            //Console.SetBufferSize(cnGrootteY+1, cnGrootteX+1);
+
             // create speelveld and additional data
             Random rnd = new Random();
-
-            Speelveld speelveld = new Speelveld(cnGrootteX, cnGrootteY); 
+            Speelveld speelveld = new Speelveld(cnGrootteY, cnGrootteX);
 
             int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
             int rndValuePlant = 10;
-            int rndValueherbivoor = 15;
-            int rndValueCarnivoor = 15;
+            int rndValueherbivoor = 10;
+            int rndValueCarnivoor = 10;
 
             ////int rndValuePlant = rnd.Next(1, rndspeelveld / 2);
             ////int rndValueherbivoor = rnd.Next(1, rndspeelveld / 2);
@@ -92,64 +108,128 @@ namespace TerraTeam1
             speelveld.ToonSpeelveld(); ;
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))
             {
-                List<Herbivoor> nieuweherbivoren = new List<Herbivoor>();
-
-                /////////////////////////////////////////////////
-                // carnivoren business
-                /////////////////////////////////////////////////
-                foreach (Carnivoor C in carnivoren)
-                {
-                    C.Eet(speelveld);
-                    C.Vecht(speelveld);
-                    C.Beweeg(speelveld);
-                    speelveld.ToonSpeelveld();
-                }
-
-                /////////////////////////////////////////////////
-                // herbivoren business
-                /////////////////////////////////////////////////
-                foreach (Herbivoor H in herbivoren)
-                {
-                    {
-                        H.Eet(speelveld);
-                    }
-
-                    {
-                        H.Beweeg(speelveld);
-                    }
-
-                    {
-                        Herbivoor nieuweherbivoor = H.PlantVoort(speelveld, herbivoren);
-
-                        if (nieuweherbivoor != null)
-                        {
-                            nieuweherbivoren.Add(nieuweherbivoor);
-                        }
-                    }
-                    speelveld.ToonSpeelveld();
-                }
-                speelveld.AddHerbivorenToSpeelveld(nieuweherbivoren);
-
-                if (nieuweherbivoren != null)
-                {
-                    foreach (Herbivoor Dier in nieuweherbivoren)
-                    {
-                        herbivoren.Add(Dier);
-                    }
-                }
-
-                /////////////////////////////////////////////////
-                // planten business
-                /////////////////////////////////////////////////
-                List<Plant> nieuweplanten = Plant.CreatePlanten(rndspeelveld / 12);
-                speelveld.AddPlantenToSpeelveld(nieuweplanten);
-                foreach (var plant in nieuweplanten)
-                {
-                    planten.Add(plant);
-                }
+                speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten);
 
                 speelveld.ToonSpeelveld();
+
+                speelveld.ResetAllStappen(herbivoren, carnivoren);
+                speelveld.RemoveDeletedCarnivoren(ref carnivoren);
+                speelveld.RemoveDeletedHerbivoren(ref herbivoren);
             }
+            Console.CursorVisible = true;
+        }
+
+        static void DoTest1()
+        {
+            Console.Clear();
+
+            // test 1
+            Speelveld speelveld = new Speelveld(3, 3);
+
+            List<Plant> planten = Plant.CreatePlanten(2);
+            planten[0].PosX = 1;
+            planten[0].PosY = 2;
+            planten[1].PosX = 2;
+            planten[1].PosY = 1;
+            speelveld.AddPlantenToSpeelveld(planten, true);
+
+            List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(2);
+            herbivoren[0].PosX = 0;
+            herbivoren[0].PosY = 1;
+            herbivoren[1].PosX = 2;
+            herbivoren[1].PosY = 0;
+            speelveld.AddHerbivorenToSpeelveld(herbivoren, true);
+
+            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(3);
+            carnivoren[0].PosX = 0;
+            carnivoren[0].PosY = 0;
+            carnivoren[1].PosX = 1;
+            carnivoren[1].PosY = 0;
+            carnivoren[1].Levenskracht = 10;
+            carnivoren[2].PosX = 1;
+            carnivoren[2].PosY = 1;
+            carnivoren[2].Levenskracht = 2;
+            speelveld.AddCarnivorenToSpeelveld(carnivoren, true);
+
+            speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten, 10);
+
+            Console.WriteLine("Press a key");
+            Console.ReadLine();
+        }
+
+        static void DoTest2()
+        {
+            Console.Clear();
+
+            // test 1
+            Speelveld speelveld = new Speelveld(3, 3);
+
+            List<Plant> planten = Plant.CreatePlanten(1);
+            planten[0].PosX = 2;
+            planten[0].PosY = 1;
+            speelveld.AddPlantenToSpeelveld(planten, true);
+
+            List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(5);
+            herbivoren[0].PosX = 0;
+            herbivoren[0].PosY = 0;
+            herbivoren[1].PosX = 0;
+            herbivoren[1].PosY = 1;
+            herbivoren[2].PosX = 1;
+            herbivoren[2].PosY = 0;
+            herbivoren[3].PosX = 1;
+            herbivoren[3].PosY = 1;
+            herbivoren[4].PosX = 2;
+            herbivoren[4].PosY = 0;
+            speelveld.AddHerbivorenToSpeelveld(herbivoren, true);
+
+            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(1);
+            carnivoren[0].PosX = 0;
+            carnivoren[0].PosY = 2;
+            speelveld.AddCarnivorenToSpeelveld(carnivoren, true);
+
+            speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten, 10);
+
+            Console.WriteLine("Press a key");
+            Console.ReadLine();
+        }
+
+        static void DoTest3()
+        {
+            Console.Clear();
+
+            // test 1
+            Speelveld speelveld = new Speelveld(3, 3);
+
+            List<Plant> planten = Plant.CreatePlanten(1);
+
+            List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(5);
+            herbivoren[0].PosX = 0;
+            herbivoren[0].PosY = 1;
+            herbivoren[1].PosX = 0;
+            herbivoren[1].PosY = 2;
+            herbivoren[2].PosX = 1;
+            herbivoren[2].PosY = 0;
+            herbivoren[3].PosX = 1;
+            herbivoren[3].PosY = 2;
+            herbivoren[4].PosX = 2;
+            herbivoren[4].PosY = 1;
+            speelveld.AddHerbivorenToSpeelveld(herbivoren, true);
+
+            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(4);
+            carnivoren[0].PosX = 0;
+            carnivoren[0].PosY = 0;
+            carnivoren[1].PosX = 1;
+            carnivoren[1].PosY = 1;
+            carnivoren[2].PosX = 2;
+            carnivoren[2].PosY = 2;
+            carnivoren[3].PosX = 2;
+            carnivoren[3].PosY = 0;
+            speelveld.AddCarnivorenToSpeelveld(carnivoren, true);
+
+            speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten, 10);
+
+            Console.WriteLine("Press a key");
+            Console.ReadLine();
         }
     }
 }
