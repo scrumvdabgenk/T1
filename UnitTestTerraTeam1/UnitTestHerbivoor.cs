@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using TerraTeam1;
 
 namespace UnitTestTerraTeam1
-{
+{ 
     [TestClass]
     public class UnitTestHerbivoor
     {
+        Dier dier = null;
+
         [TestMethod]
         public void TestMethodHerbivoorEet()
         {
@@ -30,7 +32,7 @@ namespace UnitTestTerraTeam1
             herbivoren[0].Levenskracht = 10;
             loSpeelveld.AddHerbivorenToSpeelveld(herbivoren, true);
 
-            herbivoren[0].Eet(loSpeelveld);
+            herbivoren[0].Eet(loSpeelveld, dier);
 
             // assume
             Assert.AreEqual(loSpeelveld.Terrarium[0, 1].GetType(), typeof(Plant));

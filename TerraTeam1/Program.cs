@@ -17,7 +17,7 @@ namespace TerraTeam1
             while (lcInput != "0")
             {
                 // do some Console stuff
-                Console.BackgroundColor = ConsoleColor.DarkGray;
+                Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.White;
 
                 Console.Clear();
@@ -77,7 +77,7 @@ namespace TerraTeam1
         static void DoTerrateam()
         {
             // do some Console stuff
-            Console.BackgroundColor = ConsoleColor.DarkYellow;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.CursorVisible = false;
             Console.Clear();
             //Console.SetWindowSize(cnGrootteY+1, cnGrootteX+1);
@@ -91,10 +91,12 @@ namespace TerraTeam1
             int rndValuePlant = 10;
             int rndValueherbivoor = 10;
             int rndValueCarnivoor = 10;
+            int rndValueMens = 10;
 
             ////int rndValuePlant = rnd.Next(1, rndspeelveld / 2);
             ////int rndValueherbivoor = rnd.Next(1, rndspeelveld / 2);
             ////int rndValueCarnivoor = rnd.Next(1, rndspeelveld / 4);
+            ////int rndValueMens = rnd.Next(1, rndspeelveld / 8);
 
             List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
             speelveld.AddPlantenToSpeelveld(planten);
@@ -105,16 +107,20 @@ namespace TerraTeam1
             List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(rnd.Next(1, rndValueCarnivoor));
             speelveld.AddCarnivorenToSpeelveld(carnivoren);
 
+            List<Mens>mensen = Mens.CreateMensen(rnd.Next(1, rndValueMens));
+            speelveld.AddMensenToSpeelveld(mensen);
+
             speelveld.ToonSpeelveld(); ;
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))
             {
-                speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten);
+                speelveld.DoActionsOf1Day(mensen, carnivoren, herbivoren, planten);
 
                 speelveld.ToonSpeelveld();
 
                 speelveld.ResetAllStappen(herbivoren, carnivoren);
                 speelveld.RemoveDeletedCarnivoren(ref carnivoren);
                 speelveld.RemoveDeletedHerbivoren(ref herbivoren);
+                speelveld.RemoveDeletedMensen(ref mensen);
             }
             Console.CursorVisible = true;
         }
@@ -126,12 +132,20 @@ namespace TerraTeam1
             // test 1
             Speelveld speelveld = new Speelveld(3, 3);
 
+            // . . .
+            // . . .
+            // . . .
+
             List<Plant> planten = Plant.CreatePlanten(2);
             planten[0].PosX = 1;
             planten[0].PosY = 2;
             planten[1].PosX = 2;
             planten[1].PosY = 1;
             speelveld.AddPlantenToSpeelveld(planten, true);
+
+            // . . .
+            // . . P
+            // . P .
 
             List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(2);
             herbivoren[0].PosX = 0;
@@ -140,18 +154,40 @@ namespace TerraTeam1
             herbivoren[1].PosY = 0;
             speelveld.AddHerbivorenToSpeelveld(herbivoren, true);
 
-            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(3);
+            // . H .
+            // . . P
+            // H P .
+
+            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(2);
             carnivoren[0].PosX = 0;
             carnivoren[0].PosY = 0;
-            carnivoren[1].PosX = 1;
-            carnivoren[1].PosY = 0;
             carnivoren[1].Levenskracht = 10;
-            carnivoren[2].PosX = 1;
-            carnivoren[2].PosY = 1;
-            carnivoren[2].Levenskracht = 2;
+            carnivoren[1].PosX = 1;
+            carnivoren[1].PosY = 1;
+            carnivoren[1].Levenskracht = 10;
+            //carnivoren[1].PosX = 1;
+            //carnivoren[1].PosY = 0;
+            //carnivoren[1].Levenskracht = 10;
             speelveld.AddCarnivorenToSpeelveld(carnivoren, true);
 
-            speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten, 10);
+            // C H .
+            // . C P
+            // H P .
+
+            List<Mens> mensen = Mens.CreateMensen(2);
+            mensen[0].PosX = 1;
+            mensen[0].PosY = 0;
+            mensen[0].Levenskracht = 10;
+            mensen[1].PosX = 1;
+            mensen[1].PosY = 1;
+            mensen[1].Levenskracht = 15;
+            speelveld.AddMensenToSpeelveld(mensen, true);
+
+            // C H .
+            // M C P
+            // H P M
+
+            speelveld.DoActionsOf1Day(mensen, carnivoren, herbivoren, planten, 10);
 
             Console.WriteLine("Press a key");
             Console.ReadLine();
@@ -164,10 +200,18 @@ namespace TerraTeam1
             // test 1
             Speelveld speelveld = new Speelveld(3, 3);
 
+            // . . .
+            // . . .
+            // . . .
+
             List<Plant> planten = Plant.CreatePlanten(1);
             planten[0].PosX = 2;
             planten[0].PosY = 1;
             speelveld.AddPlantenToSpeelveld(planten, true);
+
+            // . . .
+            // . . .
+            // . P .
 
             List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(5);
             herbivoren[0].PosX = 0;
@@ -182,12 +226,29 @@ namespace TerraTeam1
             herbivoren[4].PosY = 0;
             speelveld.AddHerbivorenToSpeelveld(herbivoren, true);
 
+            // H H .
+            // H H .
+            // H P .
+
             List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(1);
             carnivoren[0].PosX = 0;
             carnivoren[0].PosY = 2;
             speelveld.AddCarnivorenToSpeelveld(carnivoren, true);
 
-            speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten, 10);
+            // H H C
+            // H H .
+            // H P .
+
+            List<Mens> mensen = Mens.CreateMensen(1);
+            carnivoren[0].PosX = 2;
+            carnivoren[0].PosY = 2;
+            speelveld.AddMensenToSpeelveld(mensen, true);
+
+            // H H C
+            // H H .
+            // H P M
+
+            speelveld.DoActionsOf1Day(mensen, carnivoren, herbivoren, planten, 10);
 
             Console.WriteLine("Press a key");
             Console.ReadLine();
@@ -200,33 +261,55 @@ namespace TerraTeam1
             // test 1
             Speelveld speelveld = new Speelveld(3, 3);
 
-            List<Plant> planten = Plant.CreatePlanten(1);
+            // . . .
+            // . . .
+            // . . .
 
-            List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(5);
+            List<Plant> planten = Plant.CreatePlanten(1);
+            planten[0].PosX = 2;
+            planten[0].PosY = 1;
+            speelveld.AddPlantenToSpeelveld(planten, true);
+
+            // . . .
+            // . . .
+            // P H .
+
+            List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(4);
             herbivoren[0].PosX = 0;
             herbivoren[0].PosY = 1;
-            herbivoren[1].PosX = 0;
-            herbivoren[1].PosY = 2;
+            //herbivoren[1].PosX = 0;
+            //herbivoren[1].PosY = 2;
+            herbivoren[1].PosX = 1;
+            herbivoren[1].PosY = 0;
             herbivoren[2].PosX = 1;
-            herbivoren[2].PosY = 0;
-            herbivoren[3].PosX = 1;
-            herbivoren[3].PosY = 2;
-            herbivoren[4].PosX = 2;
-            herbivoren[4].PosY = 1;
+            herbivoren[2].PosY = 2;
+            herbivoren[3].PosX = 2;
+            herbivoren[3].PosY = 1;
             speelveld.AddHerbivorenToSpeelveld(herbivoren, true);
 
-            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(4);
+            // . H .
+            // H . H
+            // P H .
+
+            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(3);
             carnivoren[0].PosX = 0;
             carnivoren[0].PosY = 0;
             carnivoren[1].PosX = 1;
             carnivoren[1].PosY = 1;
             carnivoren[2].PosX = 2;
             carnivoren[2].PosY = 2;
-            carnivoren[3].PosX = 2;
-            carnivoren[3].PosY = 0;
             speelveld.AddCarnivorenToSpeelveld(carnivoren, true);
 
-            speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten, 10);
+            // C H .
+            // H C H
+            // H P C
+
+            List<Mens> mensen = Mens.CreateMensen(1);
+            mensen[0].PosX = 0;
+            mensen[0].PosY = 2;
+            speelveld.AddMensenToSpeelveld(mensen, true);
+
+            speelveld.DoActionsOf1Day(mensen, carnivoren, herbivoren, planten, 10);
 
             Console.WriteLine("Press a key");
             Console.ReadLine();

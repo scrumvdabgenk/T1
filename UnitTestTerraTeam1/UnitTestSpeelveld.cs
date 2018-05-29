@@ -51,6 +51,10 @@ namespace UnitTestTerraTeam1
         {
             Speelveld speelveld = new Speelveld(3, 3);
 
+            // . . .
+            // . . .
+            // . . .
+
             List<Plant> planten = Plant.CreatePlanten(2);
             planten[0].PosX = 1;
             planten[0].PosY = 2;
@@ -58,12 +62,20 @@ namespace UnitTestTerraTeam1
             planten[1].PosY = 1;
             speelveld.AddPlantenToSpeelveld(planten, true);
 
+            // . . .
+            // . . P
+            // . P .
+
             List<Herbivoor> herbivoren = Herbivoor.CreateHerbivoren(2);
             herbivoren[0].PosX = 0;
             herbivoren[0].PosY = 1;
             herbivoren[1].PosX = 2;
             herbivoren[1].PosY = 0;
             speelveld.AddHerbivorenToSpeelveld(herbivoren, true);
+
+            // . H .
+            // . . P
+            // H P .
 
             List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(3);
             carnivoren[0].PosX = 0;
@@ -74,9 +86,22 @@ namespace UnitTestTerraTeam1
             carnivoren[2].PosY = 1;
             speelveld.AddCarnivorenToSpeelveld(carnivoren, true);
 
+            // C H .
+            // C C P
+            // H P .
+
+            List<Mens> mensen = Mens.CreateMensen(1);
+            mensen[0].PosX = 2;
+            mensen[0].PosY = 2;
+            speelveld.AddMensenToSpeelveld(mensen, true);
+
+            // C H .
+            // C C P
+            // H P M
+
             speelveld.ToonSpeelveld();
 
-            speelveld.DoActionsOf1Day(carnivoren, herbivoren, planten);
+            speelveld.DoActionsOf1Day(mensen, carnivoren, herbivoren, planten);
 
             speelveld.ToonSpeelveld(20);
         }

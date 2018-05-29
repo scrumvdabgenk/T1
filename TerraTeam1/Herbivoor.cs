@@ -27,7 +27,7 @@ namespace TerraTeam1
         }
 
 
-        public override void Eet(Speelveld eoSpeelveld)
+        public override void Eet(Speelveld eoSpeelveld, Dier dier)
         {
             if (this.TotAantStappen <= 0)
             {

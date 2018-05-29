@@ -8,8 +8,10 @@ namespace UnitTestTerraTeam1
     [TestClass]
     public class UnitTestCarnivoor
     {
+        Dier dier = null;
+
         [TestMethod]
-        public void TestMethodCarnivoorEet()
+        public void TestMethodCarnivoorEetHerbivoor()
         {
             Speelveld loSpeelveld = new Speelveld(3, 3);
 
@@ -39,8 +41,10 @@ namespace UnitTestTerraTeam1
             carnivoren[0].PosY = 1;
             loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
 
+            dier = herbivoren[1];
+
             // do the eet()
-            carnivoren[0].Eet(loSpeelveld);
+            carnivoren[0].Eet(loSpeelveld, dier);
 
             // assume
             for (int x = 0; x < 3; x++)
@@ -80,12 +84,14 @@ namespace UnitTestTerraTeam1
             carnivoren[2].PosY = 1;
             loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
 
-            carnivoren[0].Vecht(loSpeelveld);
+            dier = carnivoren[1];
+
+            carnivoren[0].Vecht(loSpeelveld, dier);
 
             // assume
             Assert.AreEqual(loSpeelveld.Terrarium[0, 1].GetType(), typeof(Carnivoor));
-            Assert.AreEqual(loSpeelveld.Terrarium[1, 1].GetType(), typeof(Carnivoor));
-            Assert.AreEqual(loSpeelveld.Terrarium[1, 2], null);
+            Assert.AreEqual(loSpeelveld.Terrarium[1, 1], null);
+            Assert.AreEqual(loSpeelveld.Terrarium[1, 2].GetType(), typeof(Carnivoor));
         }
 
         [TestMethod]
@@ -108,12 +114,15 @@ namespace UnitTestTerraTeam1
             carnivoren[2].PosY = 1;
             loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
 
-            carnivoren[0].Vecht(loSpeelveld);
+            dier = carnivoren[1];
+
+            carnivoren[0].Vecht(loSpeelveld, dier);
 
             // assume
             Assert.AreEqual(loSpeelveld.Terrarium[0, 1].GetType(), typeof(Carnivoor));
             Assert.AreEqual(loSpeelveld.Terrarium[1, 1], null);
             Assert.AreEqual(loSpeelveld.Terrarium[1, 2].GetType(), typeof(Carnivoor));
+            
         }
 
         [TestMethod]
@@ -136,7 +145,9 @@ namespace UnitTestTerraTeam1
             carnivoren[2].PosY = 1;
             loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
 
-            carnivoren[0].Vecht(loSpeelveld);
+            dier = carnivoren[1];
+
+            carnivoren[0].Vecht(loSpeelveld, dier);
 
             // assume
             Assert.AreEqual(loSpeelveld.Terrarium[0, 1].GetType(), typeof(Carnivoor));
@@ -152,23 +163,28 @@ namespace UnitTestTerraTeam1
             // . C M    --> these 2 will fight, the left will win
             // . . .
 
-            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(3);
+            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(2);
+            List<Mens> mensen = Mens.CreateMensen(1);
             carnivoren[0].PosX = 1;
             carnivoren[0].PosY = 1;
             carnivoren[0].Levenskracht = 10;
-            carnivoren[1].PosX = 1;
-            carnivoren[1].PosY = 2;
-            carnivoren[1].Levenskracht = 5;
-            carnivoren[2].PosX = 0;
-            carnivoren[2].PosY = 1;
-            loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
+            mensen[0].PosX = 1;
+            mensen[0].PosY = 2;
+            mensen[0].Levenskracht = 5;
+            carnivoren[1].PosX = 0;
+            carnivoren[1].PosY = 1;
 
-            carnivoren[0].Vecht(loSpeelveld);
+            loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
+            loSpeelveld.AddMensenToSpeelveld(mensen, true);
+
+            dier = mensen[0];
+
+            carnivoren[0].Vecht(loSpeelveld, dier);
 
             // assume
             Assert.AreEqual(loSpeelveld.Terrarium[0, 1].GetType(), typeof(Carnivoor));
-            Assert.AreEqual(loSpeelveld.Terrarium[1, 1].GetType(), typeof(Carnivoor));
-            Assert.AreEqual(loSpeelveld.Terrarium[1, 2], null);
+            Assert.AreEqual(loSpeelveld.Terrarium[1, 1], null);
+            Assert.AreEqual(loSpeelveld.Terrarium[1, 2].GetType(), typeof(Carnivoor));
         }
 
         [TestMethod]
@@ -180,23 +196,27 @@ namespace UnitTestTerraTeam1
             // . C M    --> these 2 will fight, the right will win
             // . . .
 
-            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(3);
+            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(2);
+            List<Mens> mensen = Mens.CreateMensen(1);
             carnivoren[0].PosX = 1;
             carnivoren[0].PosY = 1;
             carnivoren[0].Levenskracht = 10;
-            carnivoren[1].PosX = 1;
-            carnivoren[1].PosY = 2;
-            carnivoren[1].Levenskracht = 15;
-            carnivoren[2].PosX = 0;
-            carnivoren[2].PosY = 1;
+            mensen[0].PosX = 1;
+            mensen[0].PosY = 2;
+            mensen[0].Levenskracht = 15;
+            carnivoren[1].PosX = 0;
+            carnivoren[1].PosY = 1;
+
             loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
+            loSpeelveld.AddMensenToSpeelveld(mensen, true);
 
-            carnivoren[0].Vecht(loSpeelveld);
+            dier = mensen[0];
 
+            carnivoren[0].Vecht(loSpeelveld, dier);
             // assume
             Assert.AreEqual(loSpeelveld.Terrarium[0, 1].GetType(), typeof(Carnivoor));
             Assert.AreEqual(loSpeelveld.Terrarium[1, 1], null);
-            Assert.AreEqual(loSpeelveld.Terrarium[1, 2].GetType(), typeof(Carnivoor));
+            Assert.AreEqual(loSpeelveld.Terrarium[1, 2].GetType(), typeof(Mens));
         }
 
         [TestMethod]
@@ -208,24 +228,28 @@ namespace UnitTestTerraTeam1
             // . C M    --> these 2 will fight, the right will win
             // . . .
 
-            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(3);
-            //List <Mens> mensen = Carnivoor.CreateCarnivoren(1);
+            List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(2);
+            List<Mens> mensen = Mens.CreateMensen(1);
             carnivoren[0].PosX = 1;
             carnivoren[0].PosY = 1;
             carnivoren[0].Levenskracht = 10;
-            carnivoren[1].PosX = 1;
-            carnivoren[1].PosY = 2;
-            carnivoren[1].Levenskracht = 10;
-            carnivoren[2].PosX = 0;
-            carnivoren[2].PosY = 1;
-            loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
+            mensen[0].PosX = 1;
+            mensen[0].PosY = 2;
+            mensen[0].Levenskracht = 10;
+            carnivoren[1].PosX = 0;
+            carnivoren[1].PosY = 1;
 
-            carnivoren[0].Vecht(loSpeelveld);
+            loSpeelveld.AddCarnivorenToSpeelveld(carnivoren, true);
+            loSpeelveld.AddMensenToSpeelveld(mensen, true);
+
+            dier = mensen[0];
+
+            carnivoren[0].Vecht(loSpeelveld, dier);
 
             // assume
             Assert.AreEqual(loSpeelveld.Terrarium[0, 1].GetType(), typeof(Carnivoor));
             Assert.AreEqual(loSpeelveld.Terrarium[1, 1].GetType(), typeof(Carnivoor));
-            Assert.AreEqual(loSpeelveld.Terrarium[1, 2].GetType(), typeof(Carnivoor));
+            Assert.AreEqual(loSpeelveld.Terrarium[1, 2].GetType(), typeof(Mens));
         }
     }
 }

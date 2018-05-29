@@ -24,6 +24,7 @@ namespace TerraTeam1
 
         public void Stap(int Xpos, int Ypos, Speelveld eoSpeelveld)
         {
+
             eoSpeelveld.Terrarium[this.PosX, this.PosY] = null;
 
             this.PosX += Xpos;
@@ -100,7 +101,7 @@ namespace TerraTeam1
             }
         }
 
-        public virtual void Eet(Speelveld eoSpeelveld)
+        public virtual void Eet(Speelveld eoSpeelveld, Dier dier)
         {
             
         }

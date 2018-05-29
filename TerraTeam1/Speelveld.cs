@@ -125,6 +125,49 @@ namespace TerraTeam1
             return amountAdded;
         }
 
+
+        public int AddMensenToSpeelveld(List<Mens> mensen, bool elDontFillInRandomValues = false)
+        {
+            Random rnd = new Random();
+            int amountOfFreeFields = this.CountAmounOfEmptyFieldsInSpeelveld();
+            int amountAdded = 0;
+
+            foreach (var p in mensen)
+            {
+                if (!p.IsDeleted)
+                {
+                    while (amountOfFreeFields > 0)
+                    {
+                        int rndValueXinp = rnd.Next(0, this.GrootteX);
+                        int rndValueYinp = rnd.Next(0, this.GrootteY);
+
+                        // test if the animal can be put on an empty place
+                        if (this.Terrarium[rndValueXinp, rndValueYinp] == null)
+                        {
+                            if (elDontFillInRandomValues == true)
+                            {
+                                this.Terrarium[p.PosX, p.PosY] = p;
+                            }
+                            else
+                            {
+                                this.Terrarium[rndValueXinp, rndValueYinp] = p;
+                                p.PosX = rndValueXinp;
+                                p.PosY = rndValueYinp;
+                                p.Levenskracht = rnd.Next(0, 100);
+                            }
+
+                            amountOfFreeFields--;
+                            amountAdded++;
+                            break;  // stop while-loop
+                        }
+                    }
+                }
+            }
+            return amountAdded;
+        }
+
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -271,6 +314,9 @@ namespace TerraTeam1
                             case "P":
                                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                                 break;
+                            case "M":
+                                Console.ForegroundColor = ConsoleColor.Gray;
+                                break;
                             default:
                                 Console.ForegroundColor = ConsoleColor.White;
                                 break;
@@ -283,8 +329,8 @@ namespace TerraTeam1
                     else
                     {
                         Console.SetCursorPosition(x + enOffsetX, y + enOffsetY);
+                        Console.Write(" ");
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        //Console.Write('.');
                     }
                 }
             }
@@ -339,7 +385,7 @@ namespace TerraTeam1
             return lnAmReset;
         }
 
-        public int DoActionsOf1Day(List<Carnivoor> carnivoren, List<Herbivoor> herbivoren, List<Plant> planten, int enOffsetX = 0)
+        public int DoActionsOf1Day(List<Mens> mensen, List<Carnivoor> carnivoren, List<Herbivoor> herbivoren, List<Plant> planten, int enOffsetX = 0)
         {
             int lnOffset = 0;
 
@@ -355,8 +401,17 @@ namespace TerraTeam1
             {
                 if (!C.IsDeleted)
                 {
-                    C.Eet(this);
-                    C.Vecht(this);
+                    Dier dier = null;
+
+                    if ((C.PosY + 1 < this.GrootteY)
+                        && (this.Terrarium[C.PosX, C.PosY + 1] != null)
+                        && (this.Terrarium[C.PosX, C.PosY + 1].GetType() == typeof(Dier)))
+                    {
+                        dier = (Dier)this.Terrarium[C.PosX, C.PosY + 1];
+                    }
+                    
+                    C.Eet(this,dier);
+                    C.Vecht(this,dier);
                     C.Beweeg(this);
 
                     this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Carni");
@@ -371,7 +426,16 @@ namespace TerraTeam1
             {
                 if (!H.IsDeleted)
                 {
-                    H.Eet(this);
+                    Dier dier = null;
+
+                    if ((H.PosY + 1 < this.GrootteY)
+                        && (this.Terrarium[H.PosX, H.PosY + 1] != null)
+                        && (this.Terrarium[H.PosX, H.PosY + 1].GetType() == typeof(Dier)))
+                    {
+                        dier = (Dier)this.Terrarium[H.PosX, H.PosY + 1];
+                    }
+
+                    H.Eet(this,dier);
                     H.Beweeg(this);
                     Herbivoor nieuweherbivoor = H.PlantVoort(this, herbivoren);
                     if (nieuweherbivoor != null)
@@ -382,6 +446,7 @@ namespace TerraTeam1
                     lnOffset++;
                 }
             }
+
             this.AddHerbivorenToSpeelveld(nieuweherbivoren);
             if (nieuweherbivoren != null)
             {
@@ -394,9 +459,33 @@ namespace TerraTeam1
             lnOffset++;
 
             /////////////////////////////////////////////////
+            // mensen business
+            /////////////////////////////////////////////////
+            foreach (Mens M in mensen)
+            {
+                if (!M.IsDeleted)
+                {
+                    Dier dier = null;
+
+                    if ((M.PosY + 1 < this.GrootteY)
+                        && (this.Terrarium[M.PosX, M.PosY + 1] != null)
+                        && (this.Terrarium[M.PosX, M.PosY + 1].GetType() == typeof(Dier)))
+                    {
+                        dier = (Dier)this.Terrarium[M.PosX, M.PosY + 1];
+                    }
+
+                    M.Vecht(this, dier);
+                    M.Eet(this, dier);
+                    M.Beweeg(this);
+                    this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Mens");
+                    lnOffset++;
+                }
+            } 
+
+            /////////////////////////////////////////////////
             // planten business
             /////////////////////////////////////////////////
-            List<Plant> nieuweplanten = Plant.CreatePlanten((this.GrootteX * this.GrootteY) / 12);
+            List<Plant> nieuweplanten = Plant.CreatePlanten((this.GrootteX * this.GrootteY) / (this.GrootteX+this.GrootteY));
             this.AddPlantenToSpeelveld(nieuweplanten);
             foreach (var plant in nieuweplanten)
             {
@@ -437,5 +526,22 @@ namespace TerraTeam1
             }
             return lnAmDeleted;
         }
+
+        public int RemoveDeletedMensen(ref List<Mens> eoMensen)
+        {
+            int lnAmDeleted = 0;
+
+            for (int x = eoMensen.Count - 1; x > 0; x--)
+            {
+                if (eoMensen[x].IsDeleted)
+                {
+                    eoMensen.Remove(eoMensen[x]);
+                    lnAmDeleted++;
+                }
+            }
+            return lnAmDeleted;
+        }
+        
+
     }
 }
