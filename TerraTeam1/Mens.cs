@@ -6,28 +6,9 @@ using System.Threading.Tasks;
 
 namespace TerraTeam1
 {
-    public class Carnivoor : Dier
+    class Mens : Carnivoor
     {
-        // constructor
-        public Carnivoor()
-        {
-            this.Naam = "C";
-        }
-
-        public static List<Carnivoor> CreateCarnivoren(int aantal)
-        {
-            List<Carnivoor> laCarnivoor = new List<Carnivoor> { };
-            while (aantal > 0)
-            {
-                laCarnivoor.Add(new Carnivoor());
-                aantal--;
-            }
-            return laCarnivoor;
-        }
-
-
-        public void Vecht(Speelveld eoSpeelveld)
-        {
+        public override void Vecht(Speelveld eoSpeelveld) {
             if (this.TotAantStappen <= 0)
             {
                 // test if the animal at the right position is a carnivoor
@@ -60,24 +41,5 @@ namespace TerraTeam1
             }
         }
 
-        public override void Eet(Speelveld eoSpeelveld)
-        {
-            if (this.TotAantStappen <= 0)
-            {
-                // test if the animal at the right position is a herbivoor
-                if (PosY + 1 < eoSpeelveld.GrootteY &&
-                    eoSpeelveld.Terrarium[PosX, PosY + 1] != null &&
-                    eoSpeelveld.Terrarium[PosX, PosY + 1].Naam.ToUpper() == "H")
-                {
-                    // add the levenskracht of the herbivoor with the carnivoor
-                    this.Levenskracht += eoSpeelveld.Terrarium[PosX, PosY + 1].Levenskracht;
-                    // remove the herbivoor
-                    eoSpeelveld.Terrarium[PosX, PosY + 1].Delete();
-                    eoSpeelveld.Terrarium[PosX, PosY + 1] = null;   // todo: move this to the delete() of the carnivoor
-                    Stap(0, 1, eoSpeelveld);
-                    this.TotAantStappen++;
-                }
-            }
-        }
     }
 }
