@@ -34,7 +34,7 @@ namespace TerraTeam1
         }
 
         //Aanpassen van het speelveld aan de specificaties opgegeven in de constructor
-        public Speelveld(int GrootteX, int GrootteY, int DisplayModel)
+        public Speelveld(int GrootteX, int GrootteY, int DisplayModel = 1)
         {
             this.grootteXval = GrootteX;
             this.grootteYval = GrootteY;
