@@ -16,6 +16,7 @@ namespace TerraTeam1
         //Aanmaken van de grootte values voor X en Y
         private int grootteXval;
         private int grootteYval;
+        private int displayModelVal;
         public int GrootteX
         {
             get { return grootteXval; }
@@ -26,12 +27,18 @@ namespace TerraTeam1
             get { return grootteYval; }
             set { grootteYval = value; }
         }
+        public int DisplayModel
+        {
+            get { return displayModelVal; }
+            set { displayModelVal = value; }
+        }
 
         //Aanpassen van het speelveld aan de specificaties opgegeven in de constructor
-        public Speelveld(int GrootteX, int GrootteY)
+        public Speelveld(int GrootteX, int GrootteY, int DisplayModel)
         {
             this.grootteXval = GrootteX;
             this.grootteYval = GrootteY;
+            this.displayModelVal = DisplayModel;
             Terrarium = new IOrganismen[GrootteX, GrootteY];
         }
 
@@ -306,25 +313,32 @@ namespace TerraTeam1
                         switch (this.Terrarium[y, x].ToString())
                         {
                             case "H":
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                Console.BackgroundColor = ConsoleColor.DarkRed;
                                 break;
                             case "C":
-                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.BackgroundColor = ConsoleColor.Yellow;
                                 break;
                             case "P":
-                                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                Console.BackgroundColor = ConsoleColor.DarkGreen;
                                 break;
                             case "M":
-                                Console.ForegroundColor = ConsoleColor.Gray;
+                                Console.BackgroundColor = ConsoleColor.Gray;
                                 break;
                             default:
-                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.BackgroundColor = ConsoleColor.White;
                                 break;
 
                         }
                         Console.SetBufferSize(300, 300);
                         Console.SetCursorPosition(x + enOffsetX, y + enOffsetY);
-                        Console.Write(this.Terrarium[y, x].ToString());
+                        if (this.DisplayModel == 1)
+                        {
+                            Console.Write(" ");
+                        }
+                        else
+                        {
+                            Console.Write(this.Terrarium[y, x].ToString());
+                        }
                     }
                     else
                     {
@@ -409,9 +423,9 @@ namespace TerraTeam1
                     {
                         dier = (Dier)this.Terrarium[C.PosX, C.PosY + 1];
                     }
-                    
-                    C.Eet(this,dier);
-                    C.Vecht(this,dier);
+
+                    C.Eet(this, dier);
+                    C.Vecht(this, dier);
                     C.Beweeg(this);
 
                     this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Carni");
@@ -435,7 +449,7 @@ namespace TerraTeam1
                         dier = (Dier)this.Terrarium[H.PosX, H.PosY + 1];
                     }
 
-                    H.Eet(this,dier);
+                    H.Eet(this, dier);
                     H.Beweeg(this);
                     Herbivoor nieuweherbivoor = H.PlantVoort(this, herbivoren);
                     if (nieuweherbivoor != null)
@@ -480,12 +494,12 @@ namespace TerraTeam1
                     this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Mens");
                     lnOffset++;
                 }
-            } 
+            }
 
             /////////////////////////////////////////////////
             // planten business
             /////////////////////////////////////////////////
-            List<Plant> nieuweplanten = Plant.CreatePlanten((this.GrootteX * this.GrootteY) / (this.GrootteX+this.GrootteY));
+            List<Plant> nieuweplanten = Plant.CreatePlanten((this.GrootteX * this.GrootteY) / (this.GrootteX + this.GrootteY));
             this.AddPlantenToSpeelveld(nieuweplanten);
             foreach (var plant in nieuweplanten)
             {
@@ -493,8 +507,13 @@ namespace TerraTeam1
             }
             this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Plant");
             lnOffset++;
-
+            //Console.ReadLine();
+            Thread.Sleep(500);
+            this.Volcano(ref mensen, ref carnivoren, ref herbivoren, ref planten, this);
+            this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Vulcano");
+            //Console.ReadLine();            
             return 0;
+
         }
 
         public int RemoveDeletedHerbivoren(ref List<Herbivoor> eoHerbivoren)
@@ -541,7 +560,76 @@ namespace TerraTeam1
             }
             return lnAmDeleted;
         }
-        
 
+        public int RemoveDeletedPlanten(ref List<Plant> eoPlanten)
+        {
+            int lnAmDeleted = 0;
+
+            for (int x = eoPlanten.Count - 1; x >= 0; x--)
+            {
+                if (eoPlanten[x].IsDeleted)
+                {
+                    eoPlanten.Remove(eoPlanten[x]);
+                    lnAmDeleted++;
+                }
+            }
+            return lnAmDeleted;
+        }
+
+        public void Volcano(ref List<Mens> eoMensen, ref List<Carnivoor> eoCarnivoren, ref List<Herbivoor> eoHerbivoren, ref List<Plant> eoPlanten, Speelveld eoSpeelveld)
+        {
+            Random rnd = new Random();
+
+            int extremeX = eoSpeelveld.GrootteX;
+            int extremeY = eoSpeelveld.GrootteY;
+            int centrepointX = rnd.Next(0, extremeX);
+            int centrepointY = rnd.Next(0, extremeY);
+
+            int diagonaalUitbarsting = 5; // Dient altijd oneven te zijn;
+
+            int vulkaanMinX = 0 - ((diagonaalUitbarsting - 1) / 2);
+            int vulkaanMaxX = ((diagonaalUitbarsting - 1) / 2);
+            int vulkaanMinY = vulkaanMinX;
+            int vulkaanMaxY = vulkaanMaxX;
+
+
+
+            for (int i = vulkaanMinX; i <= vulkaanMaxX; i++)
+            {
+                for (int j = vulkaanMinY; j <= vulkaanMaxY; j++)
+                {
+                    if ((centrepointY + j < extremeY)
+                        && (centrepointX + i < extremeX)
+                        && (centrepointY + j >= 0)
+                        && (centrepointX + i >= 0))
+                    {
+                        if (eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i] != null)
+                        {
+                            if (eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i].GetType() == typeof(Carnivoor))
+                            {
+                                eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i].Delete();
+                                this.RemoveDeletedCarnivoren(ref eoCarnivoren);
+                            }
+                            if (eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i].GetType() == typeof(Herbivoor))
+                            {
+                                eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i].Delete();
+                                this.RemoveDeletedHerbivoren(ref eoHerbivoren);
+                            }
+                            if (eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i].GetType() == typeof(Mens))
+                            {
+                                eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i].Delete();
+                                this.RemoveDeletedMensen(ref eoMensen);
+                            }
+                            if (eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i].GetType() == typeof(Plant))
+                            {
+                                eoSpeelveld.Terrarium[centrepointY + j, centrepointX + i].Delete();
+                                this.RemoveDeletedPlanten(ref eoPlanten);
+                            }
+                            this.Terrarium[centrepointY + j, centrepointX + i] = null;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

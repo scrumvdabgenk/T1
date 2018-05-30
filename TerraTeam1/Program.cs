@@ -10,6 +10,7 @@ namespace TerraTeam1
     {
         static int cnGrootteX = 6;
         static int cnGrootteY = 6;
+        static int cnDisplayModel = 1;
 
         static void Main(string[] args)
         {
@@ -72,6 +73,13 @@ namespace TerraTeam1
             {
                 cnGrootteY = lnResult;
             }
+            Console.WriteLine("Geef nieuwe display style 0/1 ({0}) :", cnDisplayModel);
+
+            lcInput = Console.ReadLine();
+            if (Int32.TryParse(lcInput, out lnResult))
+            {
+                cnDisplayModel = lnResult;
+            }
         }
 
         static void DoTerrateam()
@@ -85,11 +93,11 @@ namespace TerraTeam1
 
             // create speelveld and additional data
             Random rnd = new Random();
-            Speelveld speelveld = new Speelveld(cnGrootteY, cnGrootteX);
+            Speelveld speelveld = new Speelveld(cnGrootteY, cnGrootteX, cnDisplayModel);
 
             int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
             int rndspeelveld1 = speelveld.GrootteX + speelveld.GrootteY;
-            int rndValuePlant = (cnGrootteX + cnGrootteY) / 2;
+            int rndValuePlant = (cnGrootteX + cnGrootteY)/2;
             int rndValueherbivoor = (cnGrootteX + cnGrootteY)/2;
             int rndValueCarnivoor = cnGrootteX+cnGrootteY;
             int rndValueMens = cnGrootteX + cnGrootteY;
@@ -131,7 +139,7 @@ namespace TerraTeam1
             Console.Clear();
 
             // test 1
-            Speelveld speelveld = new Speelveld(3, 3);
+            Speelveld speelveld = new Speelveld(3, 3,0);
 
             // . . .
             // . . .
@@ -199,7 +207,7 @@ namespace TerraTeam1
             Console.Clear();
 
             // test 1
-            Speelveld speelveld = new Speelveld(3, 3);
+            Speelveld speelveld = new Speelveld(3, 3,0);
 
             // . . .
             // . . .
@@ -260,7 +268,7 @@ namespace TerraTeam1
             Console.Clear();
 
             // test 1
-            Speelveld speelveld = new Speelveld(3, 3);
+            Speelveld speelveld = new Speelveld(3, 3,0);
 
             // . . .
             // . . .

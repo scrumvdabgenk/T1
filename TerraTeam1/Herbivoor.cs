@@ -39,7 +39,7 @@ namespace TerraTeam1
                     // add the levenskracht of the herbivoor with the carnivoor
                     this.Levenskracht++;
                     // remove the plant
-                    eoSpeelveld.Terrarium[PosX, PosY + 1].Delete();
+                    ((Plant)eoSpeelveld.Terrarium[PosX, PosY + 1]).Delete();
                     eoSpeelveld.Terrarium[PosX, PosY + 1] = null;   // todo: move this to the delete() of the herbivoor
                     Stap(0, 1, eoSpeelveld);
                     this.TotAantStappen++;
