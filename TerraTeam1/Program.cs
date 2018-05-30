@@ -10,7 +10,7 @@ namespace TerraTeam1
     {
         static int cnGrootteX = 6;
         static int cnGrootteY = 6;
-        static int cnDisplayModel = 1;
+        static int cnDisplayModel = 0;
 
         static void Main(string[] args)
         {
