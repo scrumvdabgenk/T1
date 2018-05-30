@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -508,12 +509,31 @@ namespace TerraTeam1
             this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Plant");
             lnOffset++;
             //Console.ReadLine();
-            Thread.Sleep(500);
-            this.Volcano(ref mensen, ref carnivoren, ref herbivoren, ref planten, this);
-            this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Vulcano");
+            //Thread.Sleep(500);
             //Console.ReadLine();            
-            return 0;
 
+            string lcFilename = "c:\\Oefeningenfolder Johan Ballet\\Scrum\\Terrarium\\TerrariumSettings.txt";
+            int lnReturn = 0;
+            Console.WriteLine("'v': volgende dag, 's': bewaren, 'l': lezen, 'q': volcano, 'x': stoppen");
+            string lcInput = Console.ReadLine();
+            switch (lcInput)
+            {
+                case "s":
+                    this.SaveSpeelveld(lcFilename, mensen, carnivoren, herbivoren, planten);
+                    break;
+                case "l":
+                    this.LoadSpeelveld(lcFilename, ref mensen, ref carnivoren, ref herbivoren, ref planten);
+                    break;
+                case "q":
+                    this.Volcano(ref mensen, ref carnivoren, ref herbivoren, ref planten, this);
+                    this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Vulcano");
+                    break;
+                case "x":
+                    lnReturn = -1;
+                    break;
+            }
+
+            return lnReturn;
         }
 
         public int RemoveDeletedHerbivoren(ref List<Herbivoor> eoHerbivoren)
@@ -630,6 +650,143 @@ namespace TerraTeam1
                     }
                 }
             }
+        }
+
+        public int SaveSpeelveld(string ecFilename, List<Mens> mensen, List<Carnivoor> carnivoren, List<Herbivoor> herbivoren, List<Plant> planten)
+        {
+            int lnAmAdded = 0;
+            using (StreamWriter loBestand = new StreamWriter(ecFilename))
+            {
+
+                loBestand.WriteLine("SIZE," + this.GrootteX.ToString() + "," + this.GrootteY.ToString());
+
+                foreach (Mens loMens in mensen)
+                {
+                    loBestand.WriteLine("M," + loMens.PosX.ToString() + "," + loMens.PosY.ToString() + "," + loMens.Levenskracht.ToString());
+                }
+                foreach (Carnivoor loCarnivoor in carnivoren)
+                {
+                    loBestand.WriteLine("C," + loCarnivoor.PosX.ToString() + "," + loCarnivoor.PosY.ToString() + "," + loCarnivoor.Levenskracht.ToString());
+                }
+                foreach (Herbivoor loHerbivoor in herbivoren)
+                {
+                    loBestand.WriteLine("H," + loHerbivoor.PosX.ToString() + "," + loHerbivoor.PosY.ToString() + "," + loHerbivoor.Levenskracht.ToString());
+                }
+                foreach (Plant loPlant in planten)
+                {
+                    loBestand.WriteLine("P," + loPlant.PosX.ToString() + "," + loPlant.PosY.ToString() + "," + loPlant.Levenskracht.ToString());
+                }
+            }
+            return lnAmAdded;
+        }
+
+        public int LoadSpeelveld(string ecFilename, ref List<Mens> mensen, ref List<Carnivoor> carnivoren, ref List<Herbivoor> herbivoren, ref List<Plant> planten)
+        {
+            int lnAmAdded = 0;
+            using (StreamReader loBestand = new StreamReader(ecFilename))
+            {
+                mensen.Clear();
+                carnivoren.Clear();
+                herbivoren.Clear();
+                planten.Clear();
+
+                for (int x = 0; x < this.GrootteX; x++)
+                {
+                    for (int y = 0; y < this.GrootteY; y++)
+                    {
+                        this.Terrarium[x, y] = null;
+                    }
+                }
+
+                String lcLine = loBestand.ReadLine();
+                while (!String.IsNullOrEmpty(lcLine))
+                {
+                    String[] laCell = lcLine.Split(new[] { ',' });
+                    string lcType = "";
+                    int lnPosX = 0, lnPosY = 0, lnLevenskracht = 0;
+
+                    if (laCell.Length > 0)
+                    {
+                        lcType = laCell[0];
+                    }
+                    else
+                    {
+                        lcType = "";
+                    }
+                    if (laCell.Length > 1 && Int32.TryParse(laCell[1], out lnPosX))
+                    {
+                    }
+                    else
+                    {
+                        lnPosX = 0;
+                    }
+                    if (laCell.Length > 2 && Int32.TryParse(laCell[2], out lnPosY))
+                    {
+                    }
+                    else
+                    {
+                        lnPosY = 0;
+                    }
+                    if (laCell.Length > 3 && Int32.TryParse(laCell[3], out lnLevenskracht))
+                    {
+                    }
+                    else
+                    {
+                        lnLevenskracht = 0;
+                    }
+
+                    switch (lcType.ToUpper())
+                    {
+                        case "M":
+                            Mens loMens = new Mens();
+                            loMens.PosX = lnPosX;
+                            loMens.PosY = lnPosY;
+                            loMens.Levenskracht = lnLevenskracht;
+                            mensen.Add(loMens);
+                            lnAmAdded++;
+                            break;
+                        case "C":
+                            Carnivoor loCarnivoor = new Carnivoor();
+                            loCarnivoor.PosX = lnPosX;
+                            loCarnivoor.PosY = lnPosY;
+                            loCarnivoor.Levenskracht = lnLevenskracht;
+                            carnivoren.Add(loCarnivoor);
+                            lnAmAdded++;
+                            break;
+                        case "H":
+                            Herbivoor loHerbivoor = new Herbivoor();
+                            loHerbivoor.PosX = lnPosX;
+                            loHerbivoor.PosY = lnPosY;
+                            loHerbivoor.Levenskracht = lnLevenskracht;
+                            herbivoren.Add(loHerbivoor);
+                            lnAmAdded++;
+                            break;
+                        case "P":
+                            Plant loPlant = new Plant();
+                            loPlant.PosX = lnPosX;
+                            loPlant.PosY = lnPosY;
+                            loPlant.Levenskracht = lnLevenskracht;
+                            planten.Add(loPlant);
+                            lnAmAdded++;
+                            break;
+                        case "SIZE":
+                            this.GrootteX = lnPosX;
+                            this.GrootteY = lnPosY;
+                            this.Terrarium = new IOrganismen[GrootteX, GrootteY];
+                            break;
+
+                    }
+
+                    lcLine = loBestand.ReadLine();
+                }
+
+                this.AddPlantenToSpeelveld(planten, true);
+                this.AddCarnivorenToSpeelveld(carnivoren, true);
+                this.AddHerbivorenToSpeelveld(herbivoren, true);
+                this.AddMensenToSpeelveld(mensen, true);
+            }
+
+            return lnAmAdded;
         }
     }
 }

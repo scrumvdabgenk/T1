@@ -122,7 +122,7 @@ namespace TerraTeam1
             speelveld.ToonSpeelveld(); ;
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))
             {
-                speelveld.DoActionsOf1Day(mensen, carnivoren, herbivoren, planten);
+                int lnReturn = speelveld.DoActionsOf1Day(mensen, carnivoren, herbivoren, planten);
 
                 speelveld.ToonSpeelveld();
 
@@ -130,6 +130,9 @@ namespace TerraTeam1
                 speelveld.RemoveDeletedCarnivoren(ref carnivoren);
                 speelveld.RemoveDeletedHerbivoren(ref herbivoren);
                 speelveld.RemoveDeletedMensen(ref mensen);
+
+                if (lnReturn == -1)
+                    break;  // stop while loop
             }
             Console.CursorVisible = true;
         }
