@@ -88,15 +88,16 @@ namespace TerraTeam1
             Speelveld speelveld = new Speelveld(cnGrootteY, cnGrootteX);
 
             int rndspeelveld = speelveld.GrootteX * speelveld.GrootteY;
-            int rndValuePlant = 10;
-            int rndValueherbivoor = 10;
-            int rndValueCarnivoor = 10;
-            int rndValueMens = 10;
+            int rndspeelveld1 = speelveld.GrootteX + speelveld.GrootteY;
+            int rndValuePlant = (cnGrootteX + cnGrootteY) / 2;
+            int rndValueherbivoor = (cnGrootteX + cnGrootteY)/2;
+            int rndValueCarnivoor = cnGrootteX+cnGrootteY;
+            int rndValueMens = cnGrootteX + cnGrootteY;
 
-            ////int rndValuePlant = rnd.Next(1, rndspeelveld / 2);
-            ////int rndValueherbivoor = rnd.Next(1, rndspeelveld / 2);
-            ////int rndValueCarnivoor = rnd.Next(1, rndspeelveld / 4);
-            ////int rndValueMens = rnd.Next(1, rndspeelveld / 8);
+            ////////int rndValuePlant = rnd.Next(1, ((rndspeelveld / rndspeelveld1) / 5)+1);
+            ////////int rndValueherbivoor = rnd.Next(1, ((rndspeelveld / rndspeelveld1) / 4)+1);
+            ////////int rndValueCarnivoor = rnd.Next(1, ((rndspeelveld / rndspeelveld1) / 4)+1);
+            ////////int rndValueMens = rnd.Next(1, ((rndspeelveld / rndspeelveld1) / 4)+1);
 
             List<Plant> planten = Plant.CreatePlanten(rndValuePlant);
             speelveld.AddPlantenToSpeelveld(planten);
