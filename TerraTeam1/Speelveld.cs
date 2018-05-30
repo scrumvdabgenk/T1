@@ -75,6 +75,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
+                                p.Levenskracht = 3;
                             }
 
                             amountOfFreeFields--;
@@ -120,7 +121,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 5);
+                                p.Levenskracht = rnd.Next(0, 20);
                             }
 
                             amountOfFreeFields--;
@@ -161,7 +162,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 5);
+                                p.Levenskracht = rnd.Next(0, 20);
                             }
 
                             amountOfFreeFields--;
@@ -214,7 +215,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 5);
+                                p.Levenskracht = rnd.Next(0, 20);
                             }
 
                             amountOfFreeFields--;
@@ -446,20 +447,40 @@ namespace TerraTeam1
             foreach(Mens m in mensen)
             {
                 m.Levenskracht--;
+                if (m.Levenskracht <= 0)
+                {
+                    m.Delete();
+                    this.Terrarium[m.PosX, m.PosY] = null;
+                }
             }
 
             foreach(Herbivoor h in herbivoren)
             {
                 h.Levenskracht--;
+                if (h.Levenskracht <= 0)
+                {
+                    h.Delete();
+                    this.Terrarium[h.PosX, h.PosY] = null;
+                }
             }
             foreach (Carnivoor c in carnivoren)
             {
                 c.Levenskracht--;
+                if (c.Levenskracht <= 0)
+                {
+                    c.Delete();
+                    this.Terrarium[c.PosX, c.PosY] = null;
+                }
             }
 
             foreach (Plant p in planten)
             {
                 p.Levenskracht--;
+                if (p.Levenskracht <= 0)
+                {
+                    p.Delete();
+                    this.Terrarium[p.PosX, p.PosY] = null;
+                }
             }
 
             int lnOffset = 0;
