@@ -120,7 +120,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 100);
+                                p.Levenskracht = rnd.Next(0, 5);
                             }
 
                             amountOfFreeFields--;
@@ -161,7 +161,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 100);
+                                p.Levenskracht = rnd.Next(0, 5);
                             }
 
                             amountOfFreeFields--;
@@ -214,7 +214,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 100);
+                                p.Levenskracht = rnd.Next(0, 5);
                             }
 
                             amountOfFreeFields--;
@@ -311,23 +311,56 @@ namespace TerraTeam1
                 {
                     if (this.Terrarium[y, x] != null)
                     {
+                        var kleur = ConsoleColor.Black;
                         switch (this.Terrarium[y, x].ToString())
                         {
                             case "H":
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.BackgroundColor = ConsoleColor.DarkRed;
+                                if (this.Terrarium[y, x].Levenskracht < 2)
+                                {
+                                    kleur = ConsoleColor.DarkRed;
+                                }
+                                else
+                                {
+                                    kleur = ConsoleColor.Red;
+                                }
+                                Console.ForegroundColor = kleur;
+                                Console.BackgroundColor = kleur;
                                 break;
                             case "C":
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.BackgroundColor = ConsoleColor.Yellow;
+                                if (this.Terrarium[y, x].Levenskracht < 3)
+                                {
+                                    kleur = ConsoleColor.DarkYellow;
+                                }
+                                else
+                                {
+                                    kleur = ConsoleColor.Yellow;
+                                }
+                                Console.ForegroundColor = kleur;
+                                Console.BackgroundColor = kleur;                               
                                 break;
                             case "P":
-                                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                                if (this.Terrarium[y, x].Levenskracht < 1)
+                                {
+                                    kleur = ConsoleColor.DarkGreen;
+                                }
+                                else
+                                {
+                                    kleur = ConsoleColor.Green;
+                                }
+                                Console.ForegroundColor = kleur;
+                                Console.BackgroundColor = kleur;
                                 break;
                             case "M":
-                                Console.ForegroundColor = ConsoleColor.Gray;
-                                Console.BackgroundColor = ConsoleColor.Gray;
+                                if (this.Terrarium[y, x].Levenskracht < 3)
+                                {
+                                    kleur = ConsoleColor.DarkGray;
+                                }
+                                else
+                                {
+                                    kleur = ConsoleColor.Gray;
+                                }
+                                Console.ForegroundColor = kleur;
+                                Console.BackgroundColor = kleur;
                                 break;
                             default:
                                 Console.ForegroundColor = ConsoleColor.White;
@@ -344,7 +377,8 @@ namespace TerraTeam1
                         else
                         {
                             Console.BackgroundColor = ConsoleColor.Black;
-                            Console.Write(this.Terrarium[y, x].ToString());
+                            //Console.Write(this.Terrarium[y, x].ToString());
+                            Console.Write(this.Terrarium[y, x].Levenskracht.ToString());
                         }
                     }
                     else
@@ -409,7 +443,31 @@ namespace TerraTeam1
 
         public int DoActionsOf1Day(List<Mens> mensen, List<Carnivoor> carnivoren, List<Herbivoor> herbivoren, List<Plant> planten, int enOffsetX = 0)
         {
+            foreach(Mens m in mensen)
+            {
+                m.Levenskracht--;
+            }
+
+            foreach(Herbivoor h in herbivoren)
+            {
+                h.Levenskracht--;
+            }
+            foreach (Carnivoor c in carnivoren)
+            {
+                c.Levenskracht--;
+            }
+
+            foreach (Plant p in planten)
+            {
+                p.Levenskracht--;
+            }
+
             int lnOffset = 0;
+
+            for(int i =0; i <= this.CountAmounOfCarnivorenInSpeelveld() ;i++)
+            {
+
+            }
 
             this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Start");
             lnOffset++;
@@ -631,8 +689,8 @@ namespace TerraTeam1
             {
                 for (int j = vulkaanMinY; j <= vulkaanMaxY; j++)
                 {
-                    if ((centrepointY + j < extremeY-1)
-                        && (centrepointX + i < extremeX-1)
+                    if ((centrepointY + j < extremeY - 1)
+                        && (centrepointX + i < extremeX - 1)
                         && (centrepointY + j >= 0)
                         && (centrepointX + i >= 0))
                     {
@@ -694,8 +752,8 @@ namespace TerraTeam1
             {
                 for (int j = bevingMinY; j <= bevingMaxY; j++)
                 {
-                    if ((centrepointY + j < extremeY-1)
-                        && (centrepointX + i < extremeX-1)
+                    if ((centrepointY + j < extremeY - 1)
+                        && (centrepointX + i < extremeX - 1)
                         && (centrepointY + j >= 0)
                         && (centrepointX + i >= 0))
                     {
