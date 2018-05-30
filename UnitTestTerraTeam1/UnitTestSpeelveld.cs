@@ -133,9 +133,9 @@ namespace UnitTestTerraTeam1
             Speelveld speelveld = new Speelveld(3, 3);
 
             List<Carnivoor> carnivoren = Carnivoor.CreateCarnivoren(3);
-            carnivoren[0].IsDeleted = false;
+            carnivoren[0].IsDeleted = true;
             carnivoren[0].Levenskracht = 10;
-            carnivoren[1].IsDeleted = true;
+            carnivoren[1].IsDeleted = false;
             carnivoren[1].Levenskracht = 11;
             carnivoren[2].IsDeleted = false;
             carnivoren[2].Levenskracht = 12;
@@ -144,7 +144,7 @@ namespace UnitTestTerraTeam1
 
             // assume
             Assert.AreEqual(lnResult, 1);
-            Assert.AreEqual(carnivoren[0].Levenskracht, 10);
+            Assert.AreEqual(carnivoren[0].Levenskracht, 11);
             Assert.AreEqual(carnivoren[1].Levenskracht, 12);
         }
 

@@ -501,7 +501,7 @@ namespace TerraTeam1
         {
             int lnAmDeleted = 0;
 
-            for (int x = eoHerbivoren.Count - 1; x > 0; x--)
+            for (int x = eoHerbivoren.Count - 1; x >= 0; x--)
             {
                 if (eoHerbivoren[x].IsDeleted)
                 {
@@ -516,7 +516,7 @@ namespace TerraTeam1
         {
             int lnAmDeleted = 0;
 
-            for (int x = eoCarnivoren.Count - 1; x > 0; x--)
+            for (int x = eoCarnivoren.Count - 1; x >= 0; x--)
             {
                 if (eoCarnivoren[x].IsDeleted)
                 {
@@ -531,7 +531,7 @@ namespace TerraTeam1
         {
             int lnAmDeleted = 0;
 
-            for (int x = eoMensen.Count - 1; x > 0; x--)
+            for (int x = eoMensen.Count - 1; x >= 0; x--)
             {
                 if (eoMensen[x].IsDeleted)
                 {
