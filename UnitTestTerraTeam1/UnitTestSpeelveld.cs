@@ -148,5 +148,27 @@ namespace UnitTestTerraTeam1
             Assert.AreEqual(carnivoren[1].Levenskracht, 12);
         }
 
+        [TestMethod]
+        public void TestMethodHerbivoorWisDeletedMensen()
+        {
+            Speelveld speelveld = new Speelveld(3, 3);
+
+            List<Mens> mensen = Mens.CreateMensen(3);
+            mensen[0].IsDeleted = false;
+            mensen[0].Levenskracht = 10;
+            mensen[1].IsDeleted = false;
+            mensen[1].Levenskracht = 11;
+            mensen[2].IsDeleted = true;
+            mensen[2].Levenskracht = 12;
+
+            int lnResult = speelveld.RemoveDeletedMensen(ref mensen);
+
+            // assume
+            Assert.AreEqual(lnResult, 1);
+            Assert.AreEqual(mensen[0].Levenskracht, 10);
+            Assert.AreEqual(mensen[1].Levenskracht, 11);
+        }
+
+
     }
 }
