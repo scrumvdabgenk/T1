@@ -47,6 +47,7 @@
     <Compile Include="Dier.cs" />
     <Compile Include="Herbivoor.cs" />
     <Compile Include="IOrganismen.cs" />
+    <Compile Include="LijnTrekker.cs" />
     <Compile Include="Mens.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="Program.cs" />

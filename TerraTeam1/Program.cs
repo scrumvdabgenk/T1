@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraTeam1;
 
 namespace TerraTeam1
 {
@@ -14,6 +15,9 @@ namespace TerraTeam1
 
         static void Main(string[] args)
         {
+            Console.Clear();
+            LijnTrekker nieuweLijn = new LijnTrekker();
+            string titel = "Terrarium";
             Console.SetWindowSize(150,80);
             Console.SetBufferSize(150, 80);
             string lcInput = "";
@@ -24,9 +28,14 @@ namespace TerraTeam1
                 Console.ForegroundColor = ConsoleColor.White;
 
                 Console.Clear();
-                Console.WriteLine("Terrateam");
-                Console.WriteLine("=========");
-                Console.WriteLine("1) start terrateam (press ESC to stop terrateam)");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine(titel);
+                Console.ForegroundColor = ConsoleColor.White;
+                nieuweLijn.TrekLijn(0, titel.Length, '=');
+                //Console.WriteLine("=========");
+                Console.WriteLine("Ontdek de wereld");
+                Console.WriteLine("\n");
+                Console.WriteLine("1) start terrarium");
                 Console.WriteLine("2) setup");
                 //Console.WriteLine("3) do internal test 1");
                 //Console.WriteLine("4) do internal test 2");
@@ -43,15 +52,15 @@ namespace TerraTeam1
                     case "2":
                         ChangeSetup();
                         break;
-                    case "3":
-                        DoTest1();
-                        break;
-                    case "4":
-                        DoTest2();
-                        break;
-                    case "5":
-                        DoTest3();
-                        break;
+                    //case "3":
+                    //    DoTest1();
+                    //    break;
+                    //case "4":
+                    //    DoTest2();
+                    //    break;
+                    //case "5":
+                    //    DoTest3();
+                    //    break;
                 }
             }
         }
@@ -59,23 +68,29 @@ namespace TerraTeam1
 
         static void ChangeSetup()
         {
+            Console.Clear();
+            LijnTrekker nieuweLijn = new LijnTrekker();
             string lcInput = "";
             int lnResult = 0;
-            Console.WriteLine("Terrateam setup");
-            Console.WriteLine("---------------");
-            Console.WriteLine("Geef nieuwe terrateam Breedte ({0}) :", cnGrootteX);
+            string titel = "Terrarium Setup";
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(titel);
+            Console.ForegroundColor = ConsoleColor.White;
+            nieuweLijn.TrekLijn(0, titel.Length, '-');
+            //Console.WriteLine("---------------");
+            Console.WriteLine("Geef nieuwe terrarium Breedte ({0}) :", cnGrootteX);
             lcInput = Console.ReadLine();
             if (Int32.TryParse(lcInput, out lnResult))
             {
                 cnGrootteX = lnResult;
             }
-            Console.WriteLine("Geef nieuwe terrateam Hoogte ({0}) :", cnGrootteY);
+            Console.WriteLine("Geef nieuwe terrarium Hoogte ({0}) :", cnGrootteY);
             lcInput = Console.ReadLine();
             if (Int32.TryParse(lcInput, out lnResult))
             {
                 cnGrootteY = lnResult;
             }
-            Console.WriteLine("Geef nieuwe weergave stijl 0/1 ({0}) :", cnDisplayModel);
+            Console.WriteLine("Geef nieuwe weergave stijl 0(Letters)/1(Blokjes) ({0}) :", cnDisplayModel);
 
             lcInput = Console.ReadLine();
             if (Int32.TryParse(lcInput, out lnResult))
