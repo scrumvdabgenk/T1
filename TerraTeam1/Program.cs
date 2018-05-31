@@ -8,12 +8,14 @@ namespace TerraTeam1
 {
     class Program
     {
-        static int cnGrootteX = 6;
-        static int cnGrootteY = 6;
+        static int cnGrootteX = 20;
+        static int cnGrootteY = 30;
         static int cnDisplayModel = 0;
 
         static void Main(string[] args)
         {
+            Console.SetWindowSize(150,80);
+            Console.SetBufferSize(150, 80);
             string lcInput = "";
             while (lcInput != "0")
             {
@@ -26,9 +28,9 @@ namespace TerraTeam1
                 Console.WriteLine("=========");
                 Console.WriteLine("1) start terrateam (press ESC to stop terrateam)");
                 Console.WriteLine("2) setup");
-                Console.WriteLine("3) do internal test 1");
-                Console.WriteLine("4) do internal test 2");
-                Console.WriteLine("5) do internal test 3");
+                //Console.WriteLine("3) do internal test 1");
+                //Console.WriteLine("4) do internal test 2");
+                //Console.WriteLine("5) do internal test 3");
                 Console.WriteLine("0) stop");
 
                 lcInput = Console.ReadLine();
@@ -73,7 +75,7 @@ namespace TerraTeam1
             {
                 cnGrootteY = lnResult;
             }
-            Console.WriteLine("Geef nieuwe display style 0/1 ({0}) :", cnDisplayModel);
+            Console.WriteLine("Geef nieuwe weergave stijl 0/1 ({0}) :", cnDisplayModel);
 
             lcInput = Console.ReadLine();
             if (Int32.TryParse(lcInput, out lnResult))
@@ -88,7 +90,7 @@ namespace TerraTeam1
             Console.BackgroundColor = ConsoleColor.Black;
             Console.CursorVisible = false;
             Console.Clear();
-            //Console.SetWindowSize(cnGrootteY+1, cnGrootteX+1);
+//          Console.SetWindowSize(cnGrootteY+1, cnGrootteX+1);
             //Console.SetBufferSize(cnGrootteY+1, cnGrootteX+1);
 
             // create speelveld and additional data

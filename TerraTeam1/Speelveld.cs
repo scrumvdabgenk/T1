@@ -18,6 +18,7 @@ namespace TerraTeam1
         private int grootteXval;
         private int grootteYval;
         private int displayModelVal;
+        private int vandaagVal=0;
         public int GrootteX
         {
             get { return grootteXval; }
@@ -121,7 +122,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 20);
+                                p.Levenskracht = rnd.Next(20, 100);
                             }
 
                             amountOfFreeFields--;
@@ -162,7 +163,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 20);
+                                p.Levenskracht = rnd.Next(50, 90);
                             }
 
                             amountOfFreeFields--;
@@ -215,7 +216,7 @@ namespace TerraTeam1
                                 this.Terrarium[rndValueXinp, rndValueYinp] = p;
                                 p.PosX = rndValueXinp;
                                 p.PosY = rndValueYinp;
-                                p.Levenskracht = rnd.Next(0, 20);
+                                p.Levenskracht = rnd.Next(10, 50);
                             }
 
                             amountOfFreeFields--;
@@ -316,7 +317,7 @@ namespace TerraTeam1
                         switch (this.Terrarium[y, x].ToString())
                         {
                             case "H":
-                                if (this.Terrarium[y, x].Levenskracht < 2)
+                                if (this.Terrarium[y, x].Levenskracht <= 2)
                                 {
                                     kleur = ConsoleColor.DarkRed;
                                 }
@@ -324,11 +325,12 @@ namespace TerraTeam1
                                 {
                                     kleur = ConsoleColor.Red;
                                 }
+                                
                                 Console.ForegroundColor = kleur;
                                 Console.BackgroundColor = kleur;
                                 break;
                             case "C":
-                                if (this.Terrarium[y, x].Levenskracht < 3)
+                                if (this.Terrarium[y, x].Levenskracht <= 3)
                                 {
                                     kleur = ConsoleColor.DarkYellow;
                                 }
@@ -340,7 +342,7 @@ namespace TerraTeam1
                                 Console.BackgroundColor = kleur;                               
                                 break;
                             case "P":
-                                if (this.Terrarium[y, x].Levenskracht < 1)
+                                if (this.Terrarium[y, x].Levenskracht <= 1)
                                 {
                                     kleur = ConsoleColor.DarkGreen;
                                 }
@@ -352,7 +354,7 @@ namespace TerraTeam1
                                 Console.BackgroundColor = kleur;
                                 break;
                             case "M":
-                                if (this.Terrarium[y, x].Levenskracht < 3)
+                                if (this.Terrarium[y, x].Levenskracht <= 3)
                                 {
                                     kleur = ConsoleColor.DarkGray;
                                 }
@@ -378,25 +380,22 @@ namespace TerraTeam1
                         else
                         {
                             Console.BackgroundColor = ConsoleColor.Black;
-                            //Console.Write(this.Terrarium[y, x].ToString());
-                            Console.Write(this.Terrarium[y, x].Levenskracht.ToString());
+                            Console.Write(this.Terrarium[y, x].ToString());
+                            //Console.Write(this.Terrarium[y, x].Levenskracht.ToString());
                         }
                     }
                     else
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.SetCursorPosition(x + enOffsetX, y + enOffsetY);
                         Console.Write(" ");
-                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
                 }
             }
-
-            if (!String.IsNullOrEmpty(ecFooter))
-            {
-                Console.WriteLine("\n");
-                //Console.SetCursorPosition(enOffsetX, GrootteY * 2);
-                //Console.Write(ecFooter);
-            }
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine($"\n\nDag {vandaagVal}\n");
 
             //Console.SetCursorPosition(0, GrootteY * 2);
             //Console.WriteLine("Press a key");
@@ -444,6 +443,7 @@ namespace TerraTeam1
 
         public int DoActionsOf1Day(List<Mens> mensen, List<Carnivoor> carnivoren, List<Herbivoor> herbivoren, List<Plant> planten, int enOffsetX = 0)
         {
+            vandaagVal++;
             foreach(Mens m in mensen)
             {
                 m.Levenskracht--;
@@ -598,27 +598,31 @@ namespace TerraTeam1
             //Thread.Sleep(500);
             //Console.ReadLine();            
 
-            string lcFilename = "c:\\Oefeningenfolder Johan Ballet\\Scrum\\Terrarium\\TerrariumSettings.txt";
+            /////////////////////////////////////////////////
+            // input business
+            /////////////////////////////////////////////////
+            System.IO.Directory.CreateDirectory("c:\\Temp\\");
+            string lcFilename = "c:\\Temp\\TerrariumSettings.txt";
             int lnReturn = 0;
-            Console.WriteLine("'v': volgende dag, 's': bewaren, 'l': lezen, 'q': volcano, 'e': earthquake'x': stoppen");
-            string lcInput = Console.ReadLine();
+            Console.WriteLine("[Enter] Volgende dag, (B)ewaar, (L)ees, (V)ulkaan, (A)ardbeving,  (S)top");
+            string lcInput = Console.ReadLine().ToLower();
             switch (lcInput)
             {
-                case "s":
+                case "b":
                     this.SaveSpeelveld(lcFilename, mensen, carnivoren, herbivoren, planten);
                     break;
                 case "l":
                     this.LoadSpeelveld(lcFilename, ref mensen, ref carnivoren, ref herbivoren, ref planten);
                     break;
-                case "q":
+                case "v":
                     this.Volcano(ref mensen, ref carnivoren, ref herbivoren, ref planten, this);
                     this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Vulcano");
                     break;
-                case "e":
+                case "a":
                     this.Earthquake(ref mensen, ref carnivoren, ref herbivoren, ref planten, this);
                     this.ToonSpeelveld(enOffsetX * lnOffset, 0, "Earthquake");
                     break;
-                case "x":
+                case "s":
                     lnReturn = -1;
                     break;
             }
@@ -838,6 +842,7 @@ namespace TerraTeam1
         public int LoadSpeelveld(string ecFilename, ref List<Mens> mensen, ref List<Carnivoor> carnivoren, ref List<Herbivoor> herbivoren, ref List<Plant> planten)
         {
             int lnAmAdded = 0;
+            Console.Clear();
             using (StreamReader loBestand = new StreamReader(ecFilename))
             {
                 mensen.Clear();
