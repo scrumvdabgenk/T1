@@ -1,0 +1,19 @@
+-	Toevoegen aardbeving + vulkaan
+-	Toevoegen mens
+-	Toevoegen invoer 
+-	A)  startmenu: 
+	 1) start terrarium
+	 2) setup
+	 0) stop
+-	B) Terrarium setup:
+o	 breedte
+o	 hoogte
+o	weergave stijl
+-	Terrarium: 
+-	Dagnummmer
+-	[Enter] Volgende dag, (B)ewaar, (L)ees, (V)ulkaan, (A)ardbeving, (S)top
+-	Gegevens worden bewaard op harde schijf, en kunnen ook weer gelezen worden.
+-	Ieder organisme krijgt een start levenskracht.
+-	Aan het einde van iedere dag verlaagt de levenskracht.
+-	Als de levenskracht laag is wordt de kleur feller (bijna dood dus)
+-	Bij  levenskracht 0 sterft deze en verdwijnt van het terrarium
